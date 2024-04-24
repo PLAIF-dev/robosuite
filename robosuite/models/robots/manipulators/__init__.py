@@ -9,3 +9,4 @@ from .ur5e_robot import UR5e
 
 # PLAIF addtions
 from .rb3_robot import RB3
+from .aloha_robot import ALOHA

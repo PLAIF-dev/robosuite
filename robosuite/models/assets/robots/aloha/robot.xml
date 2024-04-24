@@ -6,93 +6,125 @@
   <asset>
     <material name="black" rgba="0.15 0.15 0.15 1"/>
 
-    <mesh file="vx300s_1_base.stl" scale="0.001 0.001 0.001"/>
-    <mesh file="vx300s_2_shoulder.stl" scale="0.001 0.001 0.001"/>
-    <mesh file="vx300s_3_upper_arm.stl" scale="0.001 0.001 0.001"/>
-    <mesh file="vx300s_4_upper_forearm.stl" scale="0.001 0.001 0.001"/>
-    <mesh file="vx300s_5_lower_forearm.stl" scale="0.001 0.001 0.001"/>
-    <mesh file="vx300s_6_wrist.stl" scale="0.001 0.001 0.001"/>
-    <mesh file="vx300s_7_gripper_prop.stl"/>
-    <mesh file="vx300s_7_gripper_bar.stl"/>
-    <mesh file="vx300s_7_gripper_wrist_mount.stl"/>
-    <mesh file="vx300s_8_custom_finger_left.stl"/>
-    <mesh file="vx300s_8_custom_finger_right.stl"/>
-    <mesh file="d405_solid.stl"/>
+    <mesh file="meshes/vx300s_1_base.stl" scale="0.001 0.001 0.001"/>
+    <mesh file="meshes/vx300s_2_shoulder.stl" scale="0.001 0.001 0.001"/>
+    <mesh file="meshes/vx300s_3_upper_arm.stl" scale="0.001 0.001 0.001"/>
+    <mesh file="meshes/vx300s_4_upper_forearm.stl" scale="0.001 0.001 0.001"/>
+    <mesh file="meshes/vx300s_5_lower_forearm.stl" scale="0.001 0.001 0.001"/>
+    <mesh file="meshes/vx300s_6_wrist.stl" scale="0.001 0.001 0.001"/>
+    <mesh file="meshes/vx300s_7_gripper_prop.stl"/>
+    <mesh file="meshes/vx300s_7_gripper_bar.stl"/>
+    <mesh file="meshes/vx300s_7_gripper_wrist_mount.stl"/>
+    <mesh file="meshes/vx300s_8_custom_finger_left.stl"/>
+    <mesh file="meshes/vx300s_8_custom_finger_right.stl"/>
+    <mesh file="meshes/d405_solid.stl"/>
   </asset>
 
   <default>
     <default class="vx300s">
       <joint axis="0 1 0" actuatorfrcrange="-35 35"/>
       <site group="4"/>
-      <default class="waist">
-        <joint axis="0 0 1" range="-3.14158 3.14158" damping="5.76"/>
-        <position ctrlrange="-3.14158 3.14158" kp="43"/>
-      </default>
-      <default class="shoulder">
-        <joint range="-1.85005 1.25664" armature="0.395" frictionloss="2.0" damping="20.0" actuatorfrcrange="-144 144"/>
-        <position ctrlrange="-1.85005 1.25664" kp="265"/>
-      </default>
-      <default class="elbow">
-        <joint range="-1.76278 1.6057" armature="0.383" frictionloss="1.15" damping="18.49" actuatorfrcrange="-59 59"/>
-        <position ctrlrange="-1.76278 1.6057" kp="227"/>
-      </default>
-      <default class="forearm_roll">
-        <joint axis="1 0 0" range="-3.14158 3.14158" armature="0.14" damping="6.78" actuatorfrcrange="-22 22"/>
-        <position ctrlrange="-3.14158 3.14158" kp="78"/>
-      </default>
-      <default class="wrist_angle">
-        <joint range="-1.8675 2.23402" armature="0.008" damping="6.28"/>
-        <position ctrlrange="-1.8675 2.23402" kp="37"/>
-      </default>
-      <default class="wrist_rotate">
-        <joint axis="1 0 0" range="-3.14158 3.14158" damping="1.2"/>
-        <position ctrlrange="-3.14158 3.14158" kp="10.4"/>
-      </default>
-      <default class="finger">
-        <joint type="slide" armature="0.243" damping="40"/>
-        <!--
-          The joint and control ranges are in meters, representing the linear displacement of the
-          finger on the rail. Note that the real robot takes in a float value representing the
-          position of the dynamixel servo, which actuates rotors and moves the fingers along the
-          the rail. We choose to model the displacement of the finger on the rail instead of the
-          position of the servo because the former is a more interpretable value.
-
-          Some useful values:
-          Length of rail = 12cm
-          Width of finger base = 1.9cm
-
-          Joint range should be (0.0cm, 4.1cm). This represents the _physical_ limits of the
-          fingers sliding along the rail. The 0 position represents when the inner edge of
-          the finger bases are touching each other at exactly the center of the rail.
-          4.1cm represents the outer edge of the finger bases touching the edge of the rail.
-          So the value always represents the distance from the inner edge of the finger base
-          to the center of the rail.
-
-          Control range is (0.2cm, 3.7cm). This represents measured values from a real robot
-          where the gripper is actuated to its fully closed and fully open positions. Therefore the
-          control range represents limits enforced by _software_ on the real robot.
-        -->
-        <position ctrlrange="0.002 0.037" kp="2000" kv="124"/>
-        <default class="left_finger">
-          <joint range="0 0.041" axis="0 0 -1"/>
-        </default>
-        <default class="right_finger">
-          <joint range="0 0.041" axis="0 0 -1"/>
-        </default>
-      </default>
-      <default class="visual">
-        <geom type="mesh" contype="0" conaffinity="0" density="0" group="2" material="black"/>
-      </default>
-      <default class="collision">
-        <geom group="3" type="mesh"/>
-        <default class="finger_collision">
-          <geom condim="4" solimp="2 1 0.01" solref="0.01 1" friction="1 0.005 0.0001"/>
-        </default>
-        <default class="sphere_collision">
-          <geom type="sphere" size="0.0006" rgba="1 0 0 1"/>
-        </default>
-      </default>
     </default>
+
+    <default class="waist">
+      <joint axis="0 0 1" range="-3.14158 3.14158" damping="5.76" actuatorfrcrange="-35 35"/>
+      <position ctrlrange="-3.14158 3.14158" kp="43"/>
+      <site group="4"/>
+    </default>
+
+    <default class="shoulder">
+      <joint axis="0 1 0" range="-1.85005 1.25664" armature="0.395" frictionloss="2.0" damping="20.0" actuatorfrcrange="-144 144"/>
+      <position ctrlrange="-1.85005 1.25664" kp="265"/>
+      <site group="4"/>
+    </default>
+
+    <default class="elbow">
+      <joint  axis="0 1 0" range="-1.76278 1.6057" armature="0.383" frictionloss="1.15" damping="18.49" actuatorfrcrange="-59 59"/>
+      <position ctrlrange="-1.76278 1.6057" kp="227"/>
+      <site group="4"/>
+    </default>
+
+    <default class="forearm_roll">
+      <joint axis="1 0 0" range="-3.14158 3.14158" armature="0.14" damping="6.78" actuatorfrcrange="-22 22"/>
+      <position ctrlrange="-3.14158 3.14158" kp="78"/>
+      <site group="4"/>
+    </default>
+
+    <default class="wrist_angle">
+      <joint axis="0 1 0" range="-1.8675 2.23402" armature="0.008" damping="6.28" actuatorfrcrange="-35 35"/>
+      <position ctrlrange="-1.8675 2.23402" kp="37"/>
+      <site group="4"/>
+    </default>
+
+    <default class="wrist_rotate">
+      <joint axis="1 0 0" range="-3.14158 3.14158" damping="1.2" actuatorfrcrange="-35 35"/>
+      <position ctrlrange="-3.14158 3.14158" kp="10.4"/>
+      <site group="4"/>
+    </default>
+
+      <!--
+        The joint and control ranges are in meters, representing the linear displacement of the
+        finger on the rail. Note that the real robot takes in a float value representing the
+        position of the dynamixel servo, which actuates rotors and moves the fingers along the
+        the rail. We choose to model the displacement of the finger on the rail instead of the
+        position of the servo because the former is a more interpretable value.
+
+        Some useful values:
+        Length of rail = 12cm
+        Width of finger base = 1.9cm
+
+        Joint range should be (0.0cm, 4.1cm). This represents the _physical_ limits of the
+        fingers sliding along the rail. The 0 position represents when the inner edge of
+        the finger bases are touching each other at exactly the center of the rail.
+        4.1cm represents the outer edge of the finger bases touching the edge of the rail.
+        So the value always represents the distance from the inner edge of the finger base
+        to the center of the rail.
+
+        Control range is (0.2cm, 3.7cm). This represents measured values from a real robot
+        where the gripper is actuated to its fully closed and fully open positions. Therefore the
+        control range represents limits enforced by _software_ on the real robot.
+      -->
+
+    <default class="finger">
+      <joint axis="0 1 0" type="slide" armature="0.243" damping="40" actuatorfrcrange="-35 35"/>
+      <site group="4"/>
+      
+      <position ctrlrange="0.002 0.037" kp="2000" kv="124"/>
+    </default>
+
+    <default class="left_finger">
+      <joint axis="0 0 -1" range="0 0.041" type="slide" armature="0.243" damping="40" actuatorfrcrange="-35 35"/>
+      <site group="4"/>
+      <position ctrlrange="0.002 0.037" kp="2000" kv="124"/>
+    </default>
+
+    <default class="right_finger">
+      <joint axis="0 0 -1" range="0 0.041" type="slide" armature="0.243" damping="40" actuatorfrcrange="-35 35"/>
+    </default>
+
+
+    <default class="visual">
+      <!-- <joint axis="0 1 0" actuatorfrcrange="-35 35"/> -->
+      <geom type="mesh" contype="0" conaffinity="0" density="0" group="2" material="black"/>
+      <site group="4"/>
+    </default>
+
+    <default class="collision">
+      <!-- <joint axis="0 1 0" actuatorfrcrange="-35 35"/> -->
+      <geom group="3" type="mesh"/>
+      <site group="4"/>
+    </default>
+
+    <default class="finger_collision">
+      <geom  group="3" type="mesh" condim="4" solimp="2 1 0.01" solref="0.01 1" friction="1 0.005 0.0001"/>
+      <site group="4"/>
+    </default>
+
+    <default class="sphere_collision">
+      <geom group="3" type="sphere" size="0.0006" rgba="1 0 0 1"/>
+      <site group="4"/>
+    </default>
+      
   </default>
 
   <worldbody>

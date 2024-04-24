@@ -9,6 +9,7 @@ ALL_ROBOTS = REGISTERED_ROBOTS.keys()
 # Robot class mappings -- must be maintained manually
 ROBOT_CLASS_MAPPING = {
     "Baxter": Bimanual,
+    "ALOHA": Bimanual,
     "IIWA": SingleArm,
     "Jaco": SingleArm,
     "Kinova3": SingleArm,
