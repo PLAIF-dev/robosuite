@@ -28,7 +28,7 @@ class ALOHA(ManipulatorModel):
         Returns:
             dict: Dictionary containing arm-specific gripper names
         """
-        return {"right": "RethinkGripper", "left": "RethinkGripper"}
+        return {"right": "ALOHAGripper", "left": "ALOHAGripper"}
 
     @property
     def default_controller_config(self):
@@ -54,7 +54,7 @@ class ALOHA(ManipulatorModel):
         # [right, left]
         # Arms half extended
         return np.array(
-            [0.0, -0.96, 1.16, 0.0, -0.3, 0.0, 0.0084, 0.0084, 0.0, -0.96, 1.16, 0.0, -0.3, 0.0, 0.0084, 0.0084]
+            [0.0, -0.96, 1.16, 0.0, -0.3, 0.0, 0.0, -0.96, 1.16, 0.0, -0.3, 0.0]
         )
 
     @property
