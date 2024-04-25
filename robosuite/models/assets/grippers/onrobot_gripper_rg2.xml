@@ -20,17 +20,25 @@
         <site name="grip_site" pos="0 0 0" size="0.01 0.01 0.01" rgba="1 0 0 0.5" type="sphere" group="1"/>
         <!-- This site was added for visualization. -->
         <site name="grip_site_cylinder" pos="0 0 0.1399" size="0.005 10" rgba="0 1 0 0.3" type="cylinder" group="1"/>
-
         <geom name="rg2_hand_collision" pos="0 0.0823 0" quat="0.5 0.5 0.5 0.5" type="mesh" mesh="hand" group="0"/>
+        <inertial pos="0.057581 -0.000169308 -0.000033334" euler="0 0 0" mass="0.29881464108881906" 
+          fullinertia="0.00010934311942148434 0.0003327568173229071 0.00037338963627732164 2.4297126288189813e-07 5.3958894994201004e-08 2.4899876853227836e-07"
+        />
 
         <body name="rg2_leftfinger" pos="1.57951e-10 0.1873 0.017" quat="0.5 0.5 0.5 0.5">
           <joint name="rg2_finger_joint1" pos="0 0 0" axis="0 0 1" limited="true" range="0 1.18"/>
           <geom type="mesh" mesh="finger"/>
+          <inertial pos="-0.0176873 -0.00819142 -4.15573e-05" euler="0 0 0" mass="0.24059267945559043" 
+            fullinertia="3.3970932890017096e-05 0.00029230476124314346 0.00030917405435097734 -4.8854610840491595e-05 -1.1765879805737544e-08 1.6350676533062336e-08"
+            />
         </body>
 
         <body name="rg2_rightfinger" pos="2.18977e-10 0.1873 -0.017" quat="0.5 0.5 0.5 0.5">
           <joint name="rg2_finger_joint2" pos="0 0 0" axis="0 0 -1" limited="true" range="0 1.18"/>
           <geom quat="0 1 0 0" type="mesh" mesh="finger"/>
+          <inertial pos="0.0176873 -0.00819142 -4.15573e-05" euler="3.141592653589793 0 0" mass="0.24059267945559043" 
+            fullinertia="3.3970932890017096e-05 0.00029230476124314346 0.00030917405435097734 -4.8854610840491595e-05 -1.1765879805737544e-08 1.6350676533062336e-08"
+          />
         </body>
 
       </body>
