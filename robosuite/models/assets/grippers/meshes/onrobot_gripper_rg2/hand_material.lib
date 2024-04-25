@@ -1,0 +1,11 @@
+# Aspose.3D Wavefront OBJ Exporter
+# Copyright 2004-2024 Aspose Pty Ltd.
+# File created: 04/25/2024 01:26:51
+
+newmtl Material.002
+	Ka 0.2 0.2 0.2
+	Kd 0.6038274 0.5639482 0.5070779
+	Ke 0 0 0
+	illum 2
+	d 1
+	Tr 0

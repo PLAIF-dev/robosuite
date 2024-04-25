@@ -14,6 +14,7 @@ from .null_gripper import NullGripper
 
 # PLAIF Addition
 from .aloha_gripper import ALOHAGripper
+from .onrobot_rg2_gripper import OnRobotRG2Gripper
 
 
 GRIPPER_MAPPING = {
@@ -27,6 +28,7 @@ GRIPPER_MAPPING = {
     "RobotiqThreeFingerGripper": RobotiqThreeFingerGripper,
     "RobotiqThreeFingerDexterousGripper": RobotiqThreeFingerDexterousGripper,
     "ALOHAGripper": ALOHAGripper,
+    "OnRobotRG2Gripper": OnRobotRG2Gripper,
     None: NullGripper,
 }
 
