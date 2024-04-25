@@ -1,0 +1,25 @@
+<mujoco model="rg2">
+  <asset>
+    <mesh name="base" file="base.stl"/>
+    <mesh name="shoulder" file="shoulder.stl"/>
+    <mesh name="upperarm" file="upperarm.stl"/>
+    <mesh name="forearm" file="forearm.stl"/>
+    <mesh name="wrist1" file="wrist1.stl"/>
+    <mesh name="wrist2" file="wrist2.stl"/>
+    <mesh name="wrist3" file="wrist3.stl"/>
+    <mesh name="hand" file="hand.stl"/>
+    <mesh name="finger" file="finger.stl"/>
+  </asset>
+
+  <worldbody>
+    <geom name="rg2_hand_collision" pos="0 0.0823 0" quat="0.5 0.5 0.5 0.5" type="mesh" mesh="hand"/>
+    <body name="rg2_leftfinger" pos="1.57951e-10 0.1873 0.017" quat="0.5 0.5 0.5 0.5">
+      <joint name="rg2_finger_joint1" pos="0 0 0" axis="0 0 1" limited="true" range="0 1.18"/>
+      <geom type="mesh" mesh="finger"/>
+    </body>
+    <body name="rg2_rightfinger" pos="2.18977e-10 0.1873 -0.017" quat="0.5 0.5 0.5 0.5">
+      <joint name="rg2_finger_joint2" pos="0 0 0" axis="0 0 -1" limited="true" range="0 1.18"/>
+      <geom quat="0 1 0 0" type="mesh" mesh="finger"/>
+    </body>
+</worldbody>
+</mujoco>
