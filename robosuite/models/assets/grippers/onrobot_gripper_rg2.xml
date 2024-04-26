@@ -29,7 +29,7 @@
   </default>
   
   <worldbody>
-    <body name="gripper_base" pos="0 0 0" euler="0 -1.57079 0">
+    <body name="gripper_base" pos="0 0 0" euler="-1.57079 0 -1.57079">
       <geom name="rg2_hand_col" type="mesh" mesh="RG2_Hand_col"/>
       <geom name="rg2_hand_vis" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="RG2_Hand_vis"/>
       
