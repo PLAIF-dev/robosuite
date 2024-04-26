@@ -17,6 +17,7 @@ class OnRobotRG2GripperBase(GripperModel):
 
     def __init__(self, idn=0):
         super().__init__(xml_path_completion("grippers/onrobot_gripper_rg2.xml"), idn=idn)
+        
 
     def format_action(self, action):
         return action
@@ -59,7 +60,7 @@ class OnRobotRG2Gripper(OnRobotRG2GripperBase):
 
     @property
     def speed(self):
-        return 0.01
+        return 0.002
 
     @property
     def dof(self):
