@@ -1,5 +1,5 @@
 <mujoco model="aloha_gripper">
-  <compiler angle="radian" meshdir="mehshes" autolimits="true"/>
+  <compiler angle="radian" autolimits="true"/>
 
   <actuator>
     <position class="left_finger" name="gripper_l_finger_joint" joint="left_finger"/>
@@ -7,10 +7,6 @@
   </actuator>
 
   <option cone="elliptic" impratio="10"/>
-
-  <keyframe>
-    <key name="neutral_pose" qpos="0.0084 0.0084" ctrl="0.0084"/>
-  </keyframe>
 
   <asset>
     <material name="black" rgba="0.15 0.15 0.15 1"/>
@@ -90,9 +86,9 @@
       
       <body name="eef" pos="0 0 0.035" euler="0 0 -1.57">
         <!-- This site was added for visualization. -->
-        <site name="grip_site" pos="0 0 0" size="0.01 0.01 0.01" rgba="1 0 0 0.5" type="sphere" group="1"/>
+        <site name="grip_site" pos="0 0.003 0.107" size="0.01 0.01 0.01" rgba="1 0 0 0.5" type="sphere" group="1"/>
         <!-- This site was added for visualization. -->
-        <site name="grip_site_cylinder" pos="0 0 0.1399" size="0.005 10" rgba="0 1 0 0.3" type="cylinder" group="1"/>
+        <site name="grip_site_cylinder" pos="0 0.003 0" size="0.005 10" rgba="0 1 0 0.3" type="cylinder" group="1"/>
 
 
         <inertial pos="0.000182154 -0.0341589 -0.0106026" quat="0.435286 0.557074 -0.551539 0.442718"
