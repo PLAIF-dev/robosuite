@@ -24,14 +24,14 @@
 
   <default>
     <default class="joint">
-      <joint limited="true" damping="0.1" frictionloss="0"/>
+      <joint limited="true" damping="0.1" frictionloss="0" /> <!--actuatorfrclimited="true" actuatorfrcrange="0 10.6"/>-->
     </default>
   </default>
   
   <worldbody>
     <body name="gripper_base" pos="0 0 0" euler="-1.57079 0 -1.57079">
       <geom name="rg2_hand_col" type="mesh" mesh="RG2_Hand_col"/>
-      <geom name="rg2_hand_vis" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="RG2_Hand_vis"/>
+      <geom name="rg2_hand_vis" type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="RG2_Hand_vis" rgba="0.98 0.98 0.97 1"/>
       
       <!-- Not sure about the quat value below. -->
       <inertial pos="0.061902 0.000129 -0.000005" quat="-0.00161435 0.707105 -0.00161435 0.707105" mass="1.684558" diaginertia="0.00262 0.002401 0.000862"/> 
