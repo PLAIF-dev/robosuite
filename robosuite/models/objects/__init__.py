@@ -18,6 +18,8 @@ from .xml_objects import (
     PlateWithHoleObject,
     DoorObject,
     TShirtObject,
+    ACSocketObject,
+    ACPlugObject,
 )
 from .primitive import *
 from .composite import *
