@@ -1,0 +1,147 @@
+<mujoco model="Shirt">
+  <option  integrator="implicitfast" solver="CG" sdf_iterations="10" sdf_initpoints="20" impratio="20" cone="elliptic" density="1.2" viscosity="0.00002">
+    <flag multiccd="disable"/>
+  </option>
+
+  <size nconmax="5000" njmax="5000"/>
+
+  <compiler inertiafromgeom="true" exactmeshinertia="true" angle="radian">
+  </compiler>
+
+  <!-- <size memory="200M" /> -->
+
+  <extension>
+    <plugin plugin="mujoco.sdf.sqsocket">
+      <instance name="sqsocket" />
+    </plugin>
+    <plugin plugin="mujoco.sdf.sqsocketshell">
+      <instance name="sqsocketshell" />
+    </plugin>
+  </extension>
+
+  <visual>
+    <map force="0.1" zfar="30" />
+    <rgba haze="0.15 0.25 0.35 1" />
+    <quality shadowsize="2048" />
+    <global offwidth="800" offheight="800" />
+  </visual>
+
+  <asset>
+    <texture name="plane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2"
+      width="512" height="512" mark="cross" markrgb=".8 .8 .8" />
+    <texture name="hammock" type="2d" builtin="checker" rgb1=".1 .5 .1" rgb2=".5 .1 .1"
+      width="512" height="512" mark="edge" markrgb=".8 .8 .8" />
+    <material name="plane" reflectance="0.3" texture="plane" texrepeat="1 1" texuniform="true" />
+    <material name="hammock" texture="hammock" />
+
+    <mesh file="meshes/ac_socket.stl" name="ac_socket_mesh"/>
+    <mesh file="meshes/ac_plug.stl" name="ac_plug_mesh"/>
+
+    <mesh name="sqsocket">
+      <plugin instance="sqsocket"/>
+    </mesh>
+  </asset>
+
+  <actuator>
+    <!-- <motor ctrllimited="true" ctrlrange="-10 10" joint="j" forcelimited="true" forcerange="-10 10"/> -->
+    <motor ctrllimited="true" ctrlrange="-10 10" joint="j" forcelimited="true" forcerange="-20 20"/>
+    <adhesion name="fullinsertion" body="rod_stopper" ctrlrange="0.0999 0.1" gain="50"/>
+  </actuator>
+
+  <default>
+    <default class="plastic">
+      <geom solimp="0.95 0.99 0.0001" solref="0.01 1" density="50" friction="0.5 0.3 0.2" group="0" condim="4" />
+    </default>
+
+    <default class="socket_outer">
+      <geom solimp="0.95 0.99 0.0001" solref="0.01 1" density="50" friction="0.5 0.3 0.2" group="0" condim="4" rgba="0.9 0.9 0.9 0.1"/>
+    </default>
+
+    <default class="rubber">
+      <geom solimp="0.95 0.99 0.01" solref="0.01 1" friction="1.5 0.8 0.6" group="0" condim="4" />
+    </default>
+
+    <default class="metal">
+      <geom solimp="0.95 0.99 0.0001" solref="0.01 1" density="200" friction="0.6 0.3 0.2" group="0" condim="4" />
+    </default>
+  </default>
+
+
+  <worldbody>
+    <body>
+    <!-- Floor -->
+      <geom name="floor" pos="0 0 0" size="0 0 .25" type="plane" material="plane" condim="3" />
+    </body>
+
+    <body name="object" pos="0 0 0.1" euler="0 0 1.5701">
+      <joint name="j" type="slide" damping="1" range="-0.1 0.01" limited="true"/>
+
+        <!-- <inertial pos="0 0 0" mass="0.2" diaginertia="0.0001 0.0001 0.0001" /> -->
+
+        <geom pos="0 0 0.01" mesh="ac_plug_mesh" type="mesh"  contype="0" conaffinity="0" group="1" />
+        <geom name="plug_lower_body" class="plastic" type="cylinder" size="0.0175 0.01" pos="0 0 0.02" rgba="0.5 0.5 1 0.3"/>
+        <geom name="plug_upper_body" class="plastic" type="cylinder" size="0.008 0.015" pos="0 0 0.05" rgba="0.5 0.5 1 0.3"/>
+        <geom name="plug_left_rod" class="metal" type="capsule" size="0.00205 0.008" pos="0.009 0 0.002" rgba="0.5 0.5 1 0.3"/>
+        <geom name="plug_right_rod" class="metal" type="capsule" size="0.00205 0.008" pos="-0.009 0 0.002" rgba="0.5 0.5 1 0.3"/>
+        <geom name="plug_body_middle_0" class="plastic" type="box" size="0.008 0.008 0.005" pos="0 0 0.035" rgba="0.5 0.5 1 0.3" />
+        <geom name="plug_body_middle_1" class="plastic" type="box" size="0.0075 0.005 0.005" pos="0 0.009 0.0288" euler="-0.6 0 0" rgba="0.5 0.5 1 0.3" />
+        <geom name="plug_body_middle_2" class="plastic" type="box" size="0.0075 0.005 0.005" pos="0 -0.009 0.0288" euler="0.6 0 0" rgba="0.5 0.5 1 0.3" />
+        <geom name="plug_body_middle_3" class="plastic" type="box" size="0.011 0.007 0.001" pos="0 0 0.0407" rgba="0.5 0.5 1 0.3"/>
+        <geom name="plug_body_middle_4" class="plastic" type="box" size="0.002 0.006 0.005" pos="0.006 0 0.044" euler="0 -0.75 0" rgba="0.5 0.5 1 0.3" />
+        <geom name="plug_body_middle_5" class="plastic" type="box" size="0.002 0.006 0.005" pos="-0.006 0 0.044" euler="0 0.75 0" rgba="0.5 0.5 1 0.3" />
+    </body>
+
+    <body name="object2" pos="0 0 0.045">
+      <geom pos="0 0 -0.008" euler="1.5701 0 0" type="sdf" mesh="sqsocket" rgba=".2 .2 .2 .6" class="plastic" >
+        <plugin instance="sqsocket"/>
+      </geom>
+      <geom pos="0 0.025 -0.008" type="box" size="0.025 0.001 0.034" class="socket_outer"/>
+      <geom pos="0 -0.025 -0.008" type="box" size="0.025 0.001 0.034" class="socket_outer"/>
+      <geom pos="0.025 0 -0.008" type="box" euler="0 0 1.5701" size="0.025 0.001 0.034" class="socket_outer"/>
+      <geom pos="-0.025 0 -0.008" type="box" euler="0 0 1.5701" size="0.025 0.001 0.034" class="socket_outer"/>
+      <geom pos="0 0 -0.041" type="box" euler="0 0 1.5701" size="0.025 0.025 0.001" class="socket_outer"/>
+      <geom pos="0.025 0.025 -0.008" type="cylinder" size="0.001 0.03399" class="socket_outer"/>
+      <geom pos="-0.025 0.025 -0.008" type="cylinder" size="0.001 0.03399" class="socket_outer"/>
+      <geom pos="0.025 -0.025 -0.008" type="cylinder" size="0.001 0.03399" class="socket_outer"/>
+      <geom pos="-0.025 -0.025 -0.008" type="cylinder" size="0.001 0.03399" class="socket_outer"/>
+
+      <body name="socket_slide1">
+       <joint type="slide" class="rubber" name="socket_slide1_j" range="-0.006 0.003"  pos="0 0 0.013" axis="1 0 0" limited="true" stiffness="200.0" damping="0.5" armature="2e-3" springref="0.002"/>
+       <geom pos="-0.0025 0.009 0.012" euler="0 0.7 0" type="ellipsoid" size="0.005 0.003 0.002" solimp="0.99 0.95 0.0001" solref="0.01 1" density="100" friction="1.0 0.3 0.2" group="0" condim="3" />
+      </body>
+      
+      <body name="socket_slide2">
+       <joint type="slide" class="rubber" name="socket_slide2_j" range="-0.003 0.006"  pos="0 0 0.013" axis="1 0 0" limited="true" stiffness="200.0" damping="0.5" armature="2e-3" springref="-0.002"/>
+       <geom pos="0.0025 -0.009 0.012" euler="0 -0.7 0" type="ellipsoid" size="0.005 0.003 0.002" solimp="0.99 0.95 0.0001" solref="0.01 1" density="100" friction="1.0 0.3 0.2" group="0" condim="3" />
+      </body>
+
+      <body name="rod_stopper">
+        <geom pos="0 0 -0.0115" type="box" size="0.01 0.02 0.01" rgba="0.5 0.5 1 0.3"/>
+      </body>
+    </body>
+
+        <!-- Shirt -->
+        <!-- <body name="shirt_flex">
+            <flexcomp name="shirt_flex" type="mesh" radius="0.0005" dim="2" file="meshes/tshirt.stl" rgba="0.5 0.6 0.8 1" pos="0 0 0.7" quat="0.707108 0 0 -0.707108" scale="0.5 0.5 0.5" >
+            <contact solref="0.003" selfcollide="sap" internal="true" />
+            <edge equality="true" damping="1"/>
+            <plugin plugin="mujoco.elasticity.membrane">
+                <config key="poisson" value="0" />
+                <config key="thickness" value="3e-4" />
+                <config key="young" value="1e4" />
+            </plugin>
+            </flexcomp>
+        </body> -->
+
+    <!-- Lights -->
+    <light directional="true" diffuse=".2 .2 .2" specular="0 0 0" pos="0 0 5" dir="0 0 -1" castshadow="false" />
+    <light directional="false" diffuse=".8 .8 .8" specular="0.3 0.3 0.3" pos="0 0 4" dir="0 0 -1" />
+    
+    <light directional="false" diffuse=".8 .8 .8" specular="0.3 0.3 0.3" pos="0 0 0" dir="0 0 -1" castshadow="false" />
+  </worldbody>
+
+  <contact>
+    <exclude body1="object2" body2="socket_slide1"/> 
+    <exclude body1="object2" body2="socket_slide2"/> 
+  </contact>
+</mujoco>
