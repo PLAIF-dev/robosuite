@@ -17,6 +17,9 @@ from .xml_objects import (
     CanVisualObject,
     PlateWithHoleObject,
     DoorObject,
+    TShirtObject,
+    ACSocketObject,
+    ACPlugObject,
 )
 from .primitive import *
 from .composite import *

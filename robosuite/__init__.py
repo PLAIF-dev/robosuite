@@ -12,6 +12,9 @@ from robosuite.environments.manipulation.two_arm_lift import TwoArmLift
 from robosuite.environments.manipulation.two_arm_peg_in_hole import TwoArmPegInHole
 from robosuite.environments.manipulation.two_arm_handover import TwoArmHandover
 from robosuite.environments.manipulation.two_arm_transport import TwoArmTransport
+from robosuite.environments.manipulation.shirt_fold import ShirtFold
+from robosuite.environments.manipulation.plug_lift import PlugLift
+from robosuite.environments.manipulation.socket_lift import SocketLift
 
 from robosuite.environments import ALL_ENVIRONMENTS
 from robosuite.controllers import ALL_CONTROLLERS, load_controller_config

@@ -297,3 +297,49 @@ class DoorObject(MujocoXMLObject):
         dic = super().important_sites
         dic.update({"handle": self.naming_prefix + "handle"})
         return dic
+
+
+# PLAIF Additions
+class TShirtObject(MujocoXMLObject):
+    """
+    T-shirt object
+    """
+
+    def __init__(self, name):
+        super().__init__(
+            xml_path_completion("objects/tshirt.xml"),
+            name=name,
+            joints=None,
+            obj_type="all",
+            duplicate_collision_geoms=True,
+        )
+
+
+class ACSocketObject(MujocoXMLObject):
+    """
+    AC socket object
+    """
+
+    def __init__(self, name):
+        super().__init__(
+            xml_path_completion("objects/ac_socket.xml"),
+            name=name,
+            joints=[dict(type="free", damping="0.0005")],
+            obj_type="all",
+            duplicate_collision_geoms=True,
+        )
+
+
+class ACPlugObject(MujocoXMLObject):
+    """
+    AC plug object
+    """
+
+    def __init__(self, name):
+        super().__init__(
+            xml_path_completion("objects/ac_plug.xml"),
+            name=name,
+            joints=[dict(type="free", damping="0.0005")],
+            obj_type="all",
+            duplicate_collision_geoms=True,
+        )

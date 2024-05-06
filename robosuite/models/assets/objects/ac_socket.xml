@@ -1,0 +1,94 @@
+<mujoco model="ac_socket">
+  <option solver="CG" sdf_iterations="10" sdf_initpoints="20">
+    <flag multiccd="enable"/>
+  </option>
+
+
+  <compiler inertiafromgeom="true" exactmeshinertia="true" angle="radian">
+  </compiler>
+
+
+  <extension>
+    <plugin plugin="mujoco.sdf.sqsocket">
+      <instance name="sqsocket" />
+    </plugin>
+  </extension>
+
+
+  <actuator>
+    <adhesion name="fullinsertion" body="rod_stopper" ctrlrange="0.0999 0.1" gain="50"/>
+  </actuator>
+
+
+  <asset>
+    <mesh name="sqsocket">
+      <plugin instance="sqsocket"/>
+    </mesh>
+  </asset>
+
+
+  <default>
+    <default class="plastic">
+      <geom solimp="0.95 0.98 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.2" group="0" condim="1" />
+    </default>
+
+    <default class="socket_outer">
+      <geom solimp="0.95 0.98 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.2" group="0" condim="1" rgba="0.9 0.9 0.9 1"/>
+    </default>
+
+    <default class="rubber">
+      <geom solimp="2 1 0.01" solref="0.01 1" friction="1.5 0.8 0.6" density="100" group="0" condim="4" />
+    </default>
+
+    <default class="metal">
+      <geom solimp="0.95 0.99 0.0001" solref="0.01 1" density="1000" friction="0.95 0.3 0.2" group="0" condim="4" />
+    </default>
+  </default>
+
+
+  <worldbody>
+    <body>
+      <body name="object" pos="0 0 0.042">
+        <!-- Socket inside (where the rod goes in) -->
+        <geom name="socket_inside" pos="0 0 -0.0082" euler="1.5701 0 0" type="sdf" mesh="sqsocket" rgba=".2 .2 .2 1" class="plastic" group="0">
+          <plugin instance="sqsocket"/>
+        </geom>
+
+        <!-- Socket outside shell -->
+        <geom name="socket_outer_wall_0" pos="0 0.025 -0.008" type="box" size="0.025 0.001 0.034" class="socket_outer"/>
+        <geom name="socket_outer_wall_1" pos="0 -0.025 -0.008" type="box" size="0.025 0.001 0.034" class="socket_outer"/>
+        <geom name="socket_outer_wall_2" pos="0.025 0 -0.008" type="box" euler="0 0 1.5701" size="0.025 0.001 0.034" class="socket_outer"/>
+        <geom name="socket_outer_wall_3" pos="-0.025 0 -0.008" type="box" euler="0 0 1.5701" size="0.025 0.001 0.034" class="socket_outer"/>
+        <geom name="socket_outer_bottom" pos="0 0 -0.0415" type="box" euler="0 0 1.5701" size="0.025 0.025 0.001" class="socket_outer"/>
+        <geom name="socket_outer_corner_0" pos="0.025 0.025 -0.008" type="cylinder" size="0.001 0.03399" class="socket_outer"/>
+        <geom name="socket_outer_corner_1" pos="-0.025 0.025 -0.008" type="cylinder" size="0.001 0.03399" class="socket_outer"/>
+        <geom name="socket_outer_corner_2" pos="0.025 -0.025 -0.008" type="cylinder" size="0.001 0.03399" class="socket_outer"/>
+        <geom name="socket_outer_corner_3" pos="-0.025 -0.025 -0.008" type="cylinder" size="0.001 0.03399" class="socket_outer"/>
+
+        <!-- Rotating thing at the entry -->
+        <body name="socket_slide0">
+          <joint name="socket_slide0_j" type="slide" class="rubber"  range="-0.006 0.003"  pos="0 0 0.013" axis="1 0 0" limited="true" stiffness="200.0" damping="0.5" armature="2e-3" springref="0.002"/>
+          <geom name="socket_slide0_col" pos="-0.0025 0.009 0.012" euler="0 0.7 0" type="ellipsoid" size="0.005 0.003 0.002" solimp="0.99 0.95 0.0001" solref="0.01 1" density="100" friction="1.0 0.3 0.2" group="0" condim="3" />
+        </body>
+        
+        <body name="socket_slide1">
+          <joint name="socket_slide1_j" type="slide" class="rubber" range="-0.003 0.006"  pos="0 0 0.013" axis="1 0 0" limited="true" stiffness="200.0" damping="0.5" armature="2e-3" springref="-0.002"/>
+          <geom name="socket_slide1_col" pos="0.0025 -0.009 0.012" euler="0 -0.7 0" type="ellipsoid" size="0.005 0.003 0.002" solimp="0.99 0.95 0.0001" solref="0.01 1" density="100" friction="1.0 0.3 0.2" group="0" condim="3" />
+        </body>
+
+        <!-- To make the plug not easily pulled out -->
+        <body name="rod_stopper">
+          <geom name="rod_stopper_col" pos="0 0 -0.012" type="box" size="0.01 0.02 0.01" rgba="0.5 0.5 1 0.3" group="0"/>
+        </body>
+      </body>
+      <site rgba="1 0 0 1" size="0.005" pos="0 0 0" name="bottom_site"/>
+      <site rgba="0 1 0 1" size="0.005" pos="0 0 0.072" name="top_site"/>
+      <site rgba="0 0 1 1" size="0.005" pos="0.026 0.026 0" name="horizontal_radius_site"/>
+    </body>
+  </worldbody>
+
+  <contact>
+    <exclude body1="object" body2="socket_slide0"/>
+    <exclude body1="object" body2="socket_slide1"/>
+  </contact>
+</mujoco>
