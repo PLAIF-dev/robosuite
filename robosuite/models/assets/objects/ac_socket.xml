@@ -10,7 +10,10 @@
 
   <extension>
     <plugin plugin="mujoco.sdf.sqsocket">
-      <instance name="sqsocket" />
+      <instance name="sqsocket">
+        <config key="sqsocket_conn_radius" value="0.0040"/>
+        <config key="hole_radius" value="0.0225"/>
+      </instance>
     </plugin>
   </extension>
 
@@ -33,71 +36,113 @@
     </default>
 
     <default class="outer">
-      <geom solimp="0.95 0.98 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.2" group="0" condim="1" rgba="0.9 0.9 0.9 0.1"/>
+      <geom solimp="0.95 0.98 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.2" group="0" condim="1" rgba="0.9 0.9 0.9 1"/>
+    </default>
+
+    <default class="outer_visual">
+      <geom conaffinity="0" contype="0" group="1" mass="1e-8" rgba="0.9 0.9 0.9 1"/>
     </default>
 
     <default class="rubber">
-      <geom solimp="2 1 0.01" solref="0.01 1" friction="1.5 0.8 0.6" density="100" group="0" condim="4" />
+      <geom solimp="0.95 0.98 0.001" solref="0.001 1" friction="1.5 0.8 0.6" density="100" group="0" condim="4" />
     </default>
 
     <default class="metal">
-      <geom solimp="0.95 0.99 0.0001" solref="0.01 1" density="1000" friction="0.95 0.3 0.2" group="0" condim="4" />
+      <geom solimp="0.95 0.99 0.0001" solref="0.001 1" density="1000" friction="0.95 0.3 0.2" group="0" condim="4" />
     </default>
 
     <default class="visual">
-      <geom conaffinity="0" contype="0" group="1" mass="0.0001"/>
+      <geom conaffinity="0" contype="0" group="1" mass="1e-8"/>
     </default>
   </default>
 
 
   <worldbody>
     <body>
-      <body name="object" pos="0 0 0.042" euler="0 0 1.5701">
-        <!-- Socket inside (where the rod goes in) -->
-        <geom name="inside" pos="0 0 -0.0082" euler="1.5701 0 0" type="sdf" mesh="sqsocket" rgba=".2 .2 .2 0.1" class="plastic" group="0">
-          <plugin instance="sqsocket"/>
-        </geom>
+      <body name="object">
+        <body name="offset" pos="0.007 0 0.027" euler="0 1.5701 1.5701">
+          <!-- Socket inside (where the rod goes in) -->
+          <geom name="inside" pos="0 0 -0.0082" euler="1.5701 0 0" type="sdf" mesh="sqsocket" rgba=".2 .2 .2 1" class="plastic" conaffinity="0" contype="0" group="1">
+            <plugin instance="sqsocket"/>
+          </geom>
 
-        <!-- Socket outside shell -->
-        <geom name="outer_wall_0" pos="0 0.025 -0.008" type="box" size="0.025 0.001 0.034" class="outer"/>
-        <geom name="outer_wall_1" pos="0 -0.025 -0.008" type="box" size="0.025 0.001 0.034" class="outer"/>
-        <geom name="outer_wall_2" pos="0.025 0 -0.008" type="box" euler="0 0 1.5701" size="0.025 0.001 0.034" class="outer"/>
-        <geom name="outer_wall_3" pos="-0.025 0 -0.008" type="box" euler="0 0 1.5701" size="0.025 0.001 0.034" class="outer"/>
-        <geom name="outer_bottom" pos="0 0 -0.0415" type="box" euler="0 0 1.5701" size="0.025 0.025 0.001" class="outer"/>
-        <geom name="outer_corner_0" pos="0.025 0.025 -0.008" type="cylinder" size="0.001 0.03399" class="outer"/>
-        <geom name="outer_corner_1" pos="-0.025 0.025 -0.008" type="cylinder" size="0.001 0.03399" class="outer"/>
-        <geom name="outer_corner_2" pos="0.025 -0.025 -0.008" type="cylinder" size="0.001 0.03399" class="outer"/>
-        <geom name="outer_corner_3" pos="-0.025 -0.025 -0.008" type="cylinder" size="0.001 0.03399" class="outer"/>
+          <!-- Socket outside shell -->
+          <geom name="outer_wall_0" pos="0 0.025 -0.008" type="box" size="0.025 0.001 0.034" class="outer"/>
+          <geom name="outer_wall_1" pos="0 -0.025 -0.008" type="box" size="0.025 0.001 0.034" class="outer"/>
+          <geom name="outer_wall_2" pos="0.025 0 -0.008" type="box" euler="0 0 1.5701" size="0.025 0.001 0.034" class="outer"/>
+          <geom name="outer_wall_3" pos="-0.025 0 -0.008" type="box" euler="0 0 1.5701" size="0.025 0.001 0.034" class="outer"/>
+          <geom name="outer_bottom" pos="0 0 -0.0415" type="box" euler="0 0 1.5701" size="0.025 0.025 0.001" class="outer"/>
+          <geom name="outer_corner_0" pos="0.025 0.025 -0.008" type="cylinder" size="0.001 0.03399" class="outer_visual"/>
+          <geom name="outer_corner_1" pos="-0.025 0.025 -0.008" type="cylinder" size="0.001 0.03399" class="outer_visual"/>
+          <geom name="outer_corner_2" pos="0.025 -0.025 -0.008" type="cylinder" size="0.001 0.03399" class="outer_visual"/>
+          <geom name="outer_corner_3" pos="-0.025 -0.025 -0.008" type="cylinder" size="0.001 0.03399" class="outer_visual"/>
 
-        <!-- Rotating thing at the entry -->
-        <body name="slide0">
-          <joint name="slide0_j" type="slide" class="rubber"  range="-0.006 0.003"  pos="0 0 0.013" axis="1 0 0" limited="true" stiffness="200.0" damping="0.5" armature="2e-3" springref="0.002"/>
-          <geom name="slide0_col" pos="-0.0025 0.009 0.012" euler="0 0.7 0" type="ellipsoid" size="0.005 0.003 0.002" solimp="0.99 0.95 0.0001" solref="0.01 1" density="100" friction="1.0 0.3 0.2" group="0" condim="3" />
-          <geom name="slide0_vis" pos="-0.0025 0.009 0.012" euler="0 0.7 0" type="ellipsoid" size="0.005 0.003 0.002" class="visual"/>
-        </body>
-        <site name="left_hole_enter_site" pos="0 0.009 0.013" size="0.005" rgba="0 0 1 1"/>
-        <site name="left_hole_end_site" pos="0 0.009 -0.003" size="0.005" rgba="0 0 1 1"/>
+          <!-- Rotating thing at the entry -->
+          <!-- <body name="slide0">
+            <joint name="slide0_j" type="slide" class="rubber"  range="-0.006 0.003"  pos="0 0 0.013" axis="1 0 0" limited="true" stiffness="20.0" damping="0.5" armature="2e-6" springref="0.002"/>
+            <geom name="slide0_col" pos="-0.0025 0.009 0.012" euler="0 0.7 0" type="ellipsoid" size="0.005 0.003 0.002" solimp="0.99 0.95 0.0001" solref="0.01 1" density="100" friction="1.0 0.3 0.2" group="0" condim="3" />
+            <geom name="slide0_vis" pos="-0.0025 0.009 0.012" euler="0 0.7 0" type="ellipsoid" size="0.005 0.003 0.002" class="visual"/>
+          </body> -->
+          <site name="left_hole_enter_site" pos="0 0.009 0.016" size="0.001" rgba="0 0 1 1"/>
+          <site name="left_hole_end_site" pos="0 0.009 -0.003" size="0.005" rgba="0 0 1 1"/>
 
-        <body name="slide1">
-          <joint name="slide1_j" type="slide" class="rubber" range="-0.003 0.006"  pos="0 0 0.013" axis="1 0 0" limited="true" stiffness="200.0" damping="0.5" armature="2e-3" springref="-0.002"/>
-          <geom name="slide1_col" pos="0.0025 -0.009 0.012" euler="0 -0.7 0" type="ellipsoid" size="0.005 0.003 0.002" solimp="0.99 0.95 0.0001" solref="0.01 1" density="100" friction="1.0 0.3 0.2" group="0" condim="3" />
-        </body>
-        <site name="right_hole_enter_site" pos="0 -0.009 0.013" size="0.005" rgba="0 1 0.5 1"/>
-        <site name="right_hole_end_site" pos="0 -0.009 -0.003" size="0.005" rgba="0 1 0.5 1"/>
+          <!-- <body name="slide1">
+            <joint name="slide1_j" type="slide" class="rubber" range="-0.003 0.006" pos="0 0 0.013" axis="1 0 0" limited="true" stiffness="20.0" damping="0.5" armature="2e-6" springref="-0.002"/>
+            <geom name="slide1_col" pos="0.0025 -0.009 0.012" euler="0 -0.7 0" type="ellipsoid" size="0.005 0.003 0.002" solimp="0.99 0.95 0.0001" solref="0.01 1" density="100" friction="1.0 0.3 0.2" group="0" condim="3" />
+          </body> -->
+          <site name="right_hole_enter_site" pos="0 -0.009 0.016" size="0.001" rgba="0 1 0.5 1"/>
+          <site name="right_hole_end_site" pos="0 -0.009 -0.003" size="0.005" rgba="0 1 0.5 1"/>
 
-        <!-- To make the plug not easily pulled out -->
-        <body name="rod_stopper">
-          <geom name="rod_stopper_col" pos="0 0 -0.012" type="box" size="0.01 0.02 0.01" rgba="0.5 0.5 1 0.3" group="0"/>
+          <!-- To make the plug not easily pulled out -->
+          <body name="rod_stopper">
+            <geom name="rod_stopper_col" pos="0 0 -0.012" type="box" size="0.01 0.02 0.01" rgba="0.5 0.5 1 0.3" group="0"/>
+          </body>
+
+          <!-- Cable... maybe adding cable in programmatic manner is better.
+              As one can parameterize cable characteritics. (number of chains, damping, ...) -->
+          <body name="cable0" pos="0 0 -0.040">
+            <joint name="cable0_j" type="ball" damping="0.02" pos="0 0 0"/>
+            <geom name="cable0_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.96 0.96 0.96 1" group="0" condim="3" mass="0.001"/>
+            <body name="cable1" pos="0 0 -0.036">
+              <joint name="cable1_j" type="ball" damping="0.01" pos="0 0 0"/>
+              <geom name="cable1_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.96 0.96 0.96 1" group="0" condim="3" mass="0.001"/>
+              <body name="cable2" pos="0 0 -0.036">
+                <joint name="cable2_j" type="ball" damping="0.01" pos="0 0 0"/>
+                <geom name="cable2_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.96 0.96 0.96 1" group="0" condim="3" mass="0.001"/>
+                <!-- <body name="cable3" pos="0 0 -0.036">
+                  <joint name="cable3_j" type="ball" damping="0.01" pos="0 0 0"/>
+                  <geom name="cable3_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.96 0.96 0.96 1" group="0" condim="3" mass="0.001"/>
+                  <body name="cable4" pos="0 0 -0.036">
+                    <joint name="cable4_j" type="ball" damping="0.01" pos="0 0 0"/>
+                    <geom name="cable4_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.96 0.96 0.96 1" group="0" condim="3" mass="0.001"/>
+                    <body name="cable5" pos="0 0 -0.036">
+                      <joint name="cable5_j" type="ball" damping="0.01" pos="0 0 0"/>
+                      <geom name="cable5_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.96 0.96 0.96 1" group="0" condim="3" mass="0.001"/>
+                      <body name="cable6" pos="0 0 -0.036">
+                        <joint name="cable6_j" type="ball" damping="0.01" pos="0 0 0"/>
+                        <geom name="cable6_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.96 0.96 0.96 1" group="0" condim="3" mass="0.001"/>
+                        <body name="cable7" pos="0 0 -0.036">
+                          <joint name="cable7_j" type="ball" damping="0.01" pos="0 0 0"/>
+                          <geom name="cable7_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.96 0.96 0.96 1" group="0" condim="3" mass="0.001"/>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body> -->
+              </body>
+            </body>
+          </body>
         </body>
       </body>
+
       <site rgba="1 0 0 1" size="0.005" pos="0 0 0" name="bottom_site"/>
-      <site rgba="0 1 0 1" size="0.005" pos="0 0 0.072" name="top_site"/>
-      <site rgba="0 0 1 1" size="0.005" pos="0.026 0.026 0" name="horizontal_radius_site"/>
+      <site rgba="0 1 0 1" size="0.005" pos="0 0 0.055" name="top_site"/>
+      <site rgba="0 0 1 1" size="0.005" pos="0.035 0.026 0" name="horizontal_radius_site"/>
     </body>
   </worldbody>
 
   <contact>
-    <exclude body1="object" body2="slide0"/>
-    <exclude body1="object" body2="slide1"/>
+    <!-- <exclude body1="object" body2="slide0"/>
+    <exclude body1="object" body2="slide1"/> -->
   </contact>
 </mujoco>

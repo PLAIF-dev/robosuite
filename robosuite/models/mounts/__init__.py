@@ -9,6 +9,7 @@ from .null_mount import NullMount
 MOUNT_MAPPING = {
     "RethinkMount": RethinkMount,
     "RethinkMinimalMount": RethinkMinimalMount,
+    "NullMount": NullMount,
     None: NullMount,
 }
 

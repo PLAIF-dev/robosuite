@@ -15,6 +15,7 @@ from robosuite.environments.manipulation.two_arm_transport import TwoArmTranspor
 from robosuite.environments.manipulation.shirt_fold import ShirtFold
 from robosuite.environments.manipulation.plug_lift import PlugLift
 from robosuite.environments.manipulation.socket_lift import SocketLift
+from robosuite.environments.manipulation.two_arm_ac_insertion import TwoArmACInsertion
 
 from robosuite.environments import ALL_ENVIRONMENTS
 from robosuite.controllers import ALL_CONTROLLERS, load_controller_config

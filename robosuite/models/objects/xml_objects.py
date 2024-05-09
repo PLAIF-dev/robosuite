@@ -329,6 +329,24 @@ class ACSocketObject(MujocoXMLObject):
             duplicate_collision_geoms=True,
         )
 
+    @property
+    def important_sites(self):
+        """
+        Returns:
+            dict: In addition to any default sites for this object, also provides the following entries
+
+                :`'handle'`: Name of socket handle location site
+        """
+        # Get dict from super call and add to it
+        dic = super().important_sites
+        dic.update({
+            "left_hole_enter": self.naming_prefix + "left_hole_enter_site",
+            "left_hole_end": self.naming_prefix + "left_hole_end_site",
+            "right_hole_enter": self.naming_prefix + "right_hole_enter_site",
+            "right_hole_end": self.naming_prefix + "right_hole_end_site",
+        })
+        return dic
+
 
 class ACPlugObject(MujocoXMLObject):
     """
@@ -343,3 +361,22 @@ class ACPlugObject(MujocoXMLObject):
             obj_type="all",
             duplicate_collision_geoms=True,
         )
+
+    @property
+    def important_sites(self):
+        """
+        Returns:
+            dict: In addition to any default sites for this object, also provides the following entries
+
+                :`'handle'`: Name of plug handle location site
+        """
+        # Get dict from super call and add to it
+        dic = super().important_sites
+        dic.update({
+            "handle": self.naming_prefix + "horizontal_radius_site",
+            "left_rod_end": self.naming_prefix + "left_rod_end_site",
+            "left_rod_base": self.naming_prefix + "left_rod_base_site",
+            "right_rod_end": self.naming_prefix + "right_rod_end_site",
+            "right_rod_base": self.naming_prefix + "right_rod_base_site",
+        })
+        return dic

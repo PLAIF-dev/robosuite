@@ -2,8 +2,8 @@
 <mujoco model="base">
   <compiler angle="radian" meshdir="meshes/" inertiagrouprange="0 0" autolimits="true" inertiafromgeom="true" exactmeshinertia="true"/>
 
-  <option impratio="20" cone="elliptic" density="1.2" viscosity="0.00002" solver="CG" integrator="implicitfast" sdf_iterations="10" sdf_initpoints="20">
-    <flag multiccd="disable"/>
+  <option impratio="30" cone="elliptic" density="1.2" viscosity="0.00002" solver="Newton" integrator="implicitfast" sdf_iterations="10" sdf_initpoints="20">
+    <flag multiccd="enable"/>
   </option>
 
   <size nconmax="5000" njmax="5000"/>
@@ -11,7 +11,10 @@
   <extension>
     <plugin plugin="mujoco.elasticity.membrane"/>
     <plugin plugin="mujoco.sdf.sqsocket">
-      <instance name="sqsocket" />
+      <instance name="sqsocket">
+        <config key="sqsocket_conn_radius" value="0.0040"/>
+        <config key="hole_radius" value="0.0225"/>
+      </instance>
     </plugin>
   </extension>
 

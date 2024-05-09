@@ -1,6 +1,6 @@
 <mujoco model="rb3_730es_u">
 
-  <option integrator="implicitfast" />
+  <option integrator="implicitfast"/>
 
   <actuator>
     <motor ctrllimited="true" ctrlrange="-150.0 150.0" joint="shoulder_pan_joint" name="torq_j1" />
@@ -39,8 +39,8 @@
     <inertial diaginertia="0 0 0" mass="0" pos="0 0 0"/>
     <!-- mount attached here -->
 
-    <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link0"/>
-    <geom type="mesh" mesh="link0"/>
+    <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link0" quat="0 0 0 1"/>
+    <geom type="mesh" mesh="link0" quat="0 0 0 1"/>
     <body name="link1" pos="0 0 0.1484">  <!-- 0.1453 was the original value -->
       <inertial pos="0.000101 -0.003241 -0.017587" mass="2.058" diaginertia="0.003 0.003 0.002"/>
       <joint name="shoulder_pan_joint" pos="0 0 0" axis="0 0 1" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>

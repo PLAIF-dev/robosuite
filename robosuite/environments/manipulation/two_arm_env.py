@@ -23,7 +23,7 @@ class TwoArmEnv(ManipulationEnv):
         if self.env_configuration == "default":
             self.env_configuration = "bimanual" if check_bimanual(robots[0]) else "single-arm-opposed"
 
-        if self.env_configuration == "single-arm-opposed" or self.env_configuration == "single-arm-parallel":
+        if self.env_configuration == "single-arm-opposed" or self.env_configuration == "single-arm-parallel" or self.env_configuration == "single-arm-plaif-ac":
             # Specifically two robots should be inputted!
             is_bimanual = False
             if type(robots) is not list or len(robots) != 2:

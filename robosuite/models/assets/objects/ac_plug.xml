@@ -15,52 +15,89 @@
 
   <default>
     <default class="plastic">
-      <geom solimp="0.95 0.99 0.0001" solref="0.01 1" density="100" friction="0.5 0.3 0.2" group="0" condim="1" />
-    </default>
-
-    <default class="socket_outer">
-      <geom solimp="0.95 0.99 0.0001" solref="0.01 1" density="100" friction="0.5 0.3 0.2" group="0" condim="1" rgba="0.9 0.9 0.9 1"/>
+      <geom solimp="0.95 0.98 0.001" solref="0.001 1" density="100" friction="0.95 0.3 0.2" group="0" condim="1" />
     </default>
 
     <default class="rubber">
-      <geom solimp="2 1 0.01" solref="0.01 1" friction="1.5 0.8 0.6" group="0" condim="4" />
+      <geom solimp="0.95 0.98 0.001" solref="0.001 1" friction="2 0.8 0.7" density="100" group="0" condim="6" />
     </default>
 
     <default class="metal">
-      <geom solimp="0.95 0.99 0.0001" solref="0.01 1" density="1000" friction="0.6 0.3 0.2" group="0" condim="1" />
+      <geom solimp="0.95 0.98 0.001" solref="0.001 1" density="1000" friction="0.95 0.3 0.2" group="0" condim="1" />
+    </default>
+
+    <default class="visual">
+      <geom conaffinity="0" contype="0" group="1" mass="1e-8"/>
     </default>
   </default>
 
 
   <worldbody>
     <body>
-      <body name="object" pos="-0.02 0 0" euler="0 1.5701 0">
-        <!-- visual mesh -->
-        <geom name="geom_vis" type="mesh" mesh="ac_plug_mesh"  pos="0 0 0.01"  contype="0" conaffinity="0" group="1" rgba="0.3 0.3 0.3 0.51"/>
-        <geom name="left_rod_vis" type="capsule" size="0.0024 0.008" pos="0.009 0 0.002"  contype="0" conaffinity="0" group="1" rgba="0.95 0.95 1 0.51" />
-        <geom name="right_rod_vis" type="capsule" size="0.0024 0.008" pos="-0.009 0 0.002"  contype="0" conaffinity="0" group="1" rgba="0.95 0.95 1 0.51"/>
+      <body name="object" >
+        <body name="offset" pos="-0.02 0 0" euler="0 1.5701 1.5701">
+          <!-- visual mesh -->
+          <geom name="geom_vis" type="mesh" mesh="ac_plug_mesh"  pos="0 0 0.01"  contype="0" conaffinity="0" group="1" rgba="0.3 0.3 0.3 1"/>
+          <geom name="left_rod_vis" type="capsule" size="0.0024 0.008" pos="0.009 0 0.002"  contype="0" conaffinity="0" group="1" rgba="0.95 0.95 1 1" />
+          <geom name="right_rod_vis" type="capsule" size="0.0024 0.008" pos="-0.009 0 0.002"  contype="0" conaffinity="0" group="1" rgba="0.95 0.95 1 1"/>
 
-        <!-- collision mesh (made out of primitive shapes) -->
-        <geom name="lower_body" class="plastic" type="cylinder" size="0.0175 0.01" pos="0 0 0.02" />
-        <geom name="lower_body_left_wing" class="rubber" type="box" size="0.001 0.002 0.006" pos="0.017 0 0.016" />
-        <geom name="lower_body_right_wing" class="rubber" type="box" size="0.001 0.002 0.006" pos="-0.017 0 0.016" />
-        <geom name="upper_body" class="plastic" type="cylinder" size="0.008 0.015" pos="0 0 0.05" />
-        <geom name="left_rod" class="metal" type="capsule" size="0.00205 0.008" pos="0.009 0 0.002" />
-        <site name="left_rod_base_site" pos="0.009 0 0.008" size="0.002" rgba="0 0 1 0"/>
-        <site name="left_rod_end_site" pos="0.009 0 -0.006" size="0.002" rgba="0 0 1 0"/>
-        <geom name="right_rod" class="metal" type="capsule" size="0.00205 0.008" pos="-0.009 0 0.002" />
-        <site name="right_rod_base_site" pos="-0.009 0 0.008" size="0.002" rgba="0 0 1 0"/>
-        <site name="right_rod_end_site" pos="-0.009 0 -0.006" size="0.002" rgba="0 0 1 0"/>
-        <geom name="body_middle_0" class="plastic" type="box" size="0.008 0.008 0.005" pos="0 0 0.035" />
-        <geom name="body_middle_1" class="plastic" type="box" size="0.0075 0.005 0.005" pos="0 0.009 0.0288" euler="-0.6 0 0"  />
-        <geom name="body_middle_2" class="plastic" type="box" size="0.0075 0.005 0.005" pos="0 -0.009 0.0288" euler="0.6 0 0"  />
-        <geom name="body_middle_3" class="plastic" type="box" size="0.011 0.007 0.001" pos="0 0 0.0407" />
-        <geom name="body_middle_4" class="plastic" type="box" size="0.002 0.006 0.005" pos="0.006 0 0.044" euler="0 -0.75 0" />
-        <geom name="body_middle_5" class="plastic" type="box" size="0.002 0.006 0.005" pos="-0.006 0 0.044" euler="0 0.75 0" />
+          <!-- collision mesh (made out of primitive shapes) -->
+          <geom name="lower_body" class="rubber" type="box" size="0.0175 0.0175 0.01" pos="0 0 0.02" rgba="0 0 0 0"/>
+          <geom name="lower_body_left_wing" class="rubber" type="box" size="0.001 0.002 0.006" pos="0.017 0 0.016" />
+          <geom name="lower_body_right_wing" class="rubber" type="box" size="0.001 0.002 0.006" pos="-0.017 0 0.016" />
+          <geom name="upper_body" class="rubber" type="cylinder" size="0.008 0.015" pos="0 0 0.05" />
+          <geom name="left_rod" class="metal" type="capsule" size="0.00205 0.008" pos="0.009 0 0.002" />
+          <site name="left_rod_base_site" pos="0.009 0 0.008" size="0.002" rgba="0 0 1 0"/>
+          <site name="left_rod_end_site" pos="0.009 0 -0.006" size="0.002" rgba="0 0 1 0"/>
+          <geom name="right_rod" class="metal" type="capsule" size="0.00205 0.008" pos="-0.009 0 0.002" />
+          <site name="right_rod_base_site" pos="-0.009 0 0.008" size="0.002" rgba="0 0 1 0"/>
+          <site name="right_rod_end_site" pos="-0.009 0 -0.006" size="0.002" rgba="0 0 1 0"/>
+
+          <!-- Small wings of the plug but creates contact instability. Maybe use SDF? -->
+          <!-- <geom name="body_middle_0" class="plastic" type="box" size="0.008 0.008 0.005" pos="0 0 0.035" />
+          <geom name="body_middle_1" class="plastic" type="box" size="0.0075 0.005 0.005" pos="0 0.009 0.0288" euler="-0.6 0 0"  />
+          <geom name="body_middle_2" class="plastic" type="box" size="0.0075 0.005 0.005" pos="0 -0.009 0.0288" euler="0.6 0 0"  />
+          <geom name="body_middle_3" class="plastic" type="box" size="0.011 0.007 0.001" pos="0 0 0.0407" />
+          <geom name="body_middle_4" class="plastic" type="box" size="0.002 0.006 0.005" pos="0.006 0 0.044" euler="0 -0.75 0" />
+          <geom name="body_middle_5" class="plastic" type="box" size="0.002 0.006 0.005" pos="-0.006 0 0.044" euler="0 0.75 0" /> -->
+
+          <body name="cable0" pos="0 0 0.065" euler="3.1415 0 0">
+            <joint name="cable0_j" type="ball" damping="0.01" pos="0 0 0"/>
+            <geom name="cable0_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.3 0.3 0.3 1" group="0" condim="3" mass="0.001"/>
+            <body name="cable1" pos="0 0 -0.036">
+              <joint name="cable1_j" type="ball" damping="0.005" pos="0 0 0"/>
+              <geom name="cable1_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.3 0.3 0.3 1" group="0" condim="3" mass="0.001"/>
+              <body name="cable2" pos="0 0 -0.036">
+                <joint name="cable2_j" type="ball" damping="0.005" pos="0 0 0"/>
+                <geom name="cable2_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.3 0.3 0.3 1" group="0" condim="3" mass="0.001"/>
+                <!-- <body name="cable3" pos="0 0 -0.036">
+                  <joint name="cable3_j" type="ball" damping="0.01" pos="0 0 0"/>
+                  <geom name="cable3_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.3 0.3 0.3 1" group="0" condim="3" mass="0.001"/>
+                  <body name="cable4" pos="0 0 -0.036">
+                    <joint name="cable4_j" type="ball" damping="0.01" pos="0 0 0"/>
+                    <geom name="cable4_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.3 0.3 0.3 1" group="0" condim="3" mass="0.001"/>
+                    <body name="cable5" pos="0 0 -0.036">
+                      <joint name="cable5_j" type="ball" damping="0.01" pos="0 0 0"/>
+                      <geom name="cable5_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.3 0.3 0.3 1" group="0" condim="3" mass="0.001"/>
+                      <body name="cable6" pos="0 0 -0.036">
+                        <joint name="cable6_j" type="ball" damping="0.01" pos="0 0 0"/>
+                        <geom name="cable6_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.3 0.3 0.3 1" group="0" condim="3" mass="0.001"/>
+                        <body name="cable7" pos="0 0 -0.036">
+                          <joint name="cable7_j" type="ball" damping="0.01" pos="0 0 0"/>
+                          <geom name="cable7_geom" class="rubber" type="capsule" pos="0 0 -0.021" size="0.003 0.015" rgba="0.3 0.3 0.3 1" group="0" condim="3" mass="0.001"/>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body> -->
+              </body>
+            </body>
+          </body>
+        </body>
       </body>
-      <site rgba="1 0 0 0" size="0.005" pos="0 0 -0.02" name="bottom_site"/>
-      <site rgba="0 1 0 0" size="0.005" pos="0 0 0.02" name="top_site"/>
-      <site rgba="0 0 1 0" size="0.005" pos="0.045 0.0 0" name="horizontal_radius_site"/>
+      <site rgba="1 0 0 1" size="0.005" pos="0 0 -0.02" name="bottom_site"/>
+      <site rgba="0 1 0 1" size="0.005" pos="0 0 0.02" name="top_site"/>
+      <site rgba="0 0 1 1" size="0.005" pos="0.045 0.0 0" name="horizontal_radius_site"/>
     </body>
   </worldbody>
 
