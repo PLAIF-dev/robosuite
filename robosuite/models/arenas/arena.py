@@ -5,10 +5,7 @@ from robosuite.utils.mjcf_utils import (
     ENVIRONMENT_COLLISION_COLOR,
     array_to_string,
     find_elements,
-    new_body,
     new_element,
-    new_geom,
-    new_joint,
     recolor_collision_geoms,
     string_to_array,
 )

@@ -2,12 +2,8 @@
 Test script for recording a sequence of random actions and playing them back
 """
 
-import argparse
-import json
-import os
 import random
 
-import h5py
 import numpy as np
 
 import robosuite

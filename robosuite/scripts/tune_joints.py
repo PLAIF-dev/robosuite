@@ -18,7 +18,7 @@ RELEVANT KEY PRESSES:
 import argparse
 
 import numpy as np
-from pynput.keyboard import Controller, Key, Listener
+from pynput.keyboard import Key, Listener
 
 import robosuite
 from robosuite.robots import SingleArm

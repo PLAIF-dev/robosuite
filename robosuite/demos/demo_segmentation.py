@@ -3,8 +3,6 @@ Play random actions in an environment and render a video that demonstrates segme
 """
 import argparse
 import colorsys
-import json
-import random
 
 import imageio
 import matplotlib.cm as cm

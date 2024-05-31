@@ -65,7 +65,6 @@ import argparse
 import numpy as np
 
 import robosuite as suite
-import robosuite.utils.transform_utils as T
 from robosuite import load_controller_config
 
 # Arguments for this test script

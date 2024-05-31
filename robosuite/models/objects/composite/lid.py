@@ -1,6 +1,5 @@
 import numpy as np
 
-import robosuite.utils.transform_utils as T
 from robosuite.models.objects import CompositeObject
 from robosuite.utils.mjcf_utils import CustomMaterial, add_to_dict
 

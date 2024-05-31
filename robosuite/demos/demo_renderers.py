@@ -1,12 +1,8 @@
 import argparse
-import json
 
 import numpy as np
 
-import robosuite as suite
-import robosuite.utils.transform_utils as T
 from robosuite.controllers import load_controller_config
-from robosuite.renderers import load_renderer_config
 from robosuite.utils.input_utils import *
 
 

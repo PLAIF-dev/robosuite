@@ -1,7 +1,6 @@
+import numpy as np
 import random
 from collections import OrderedDict
-
-import numpy as np
 
 import robosuite.utils.transform_utils as T
 from robosuite.environments.manipulation.single_arm_env import SingleArmEnv

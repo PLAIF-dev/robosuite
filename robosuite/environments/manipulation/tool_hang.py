@@ -1,6 +1,5 @@
-from collections import OrderedDict
-
 import numpy as np
+from collections import OrderedDict
 
 import robosuite.utils.transform_utils as T
 from robosuite.environments.manipulation.single_arm_env import SingleArmEnv

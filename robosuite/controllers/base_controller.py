@@ -1,8 +1,7 @@
 import abc
-from collections.abc import Iterable
-
 import mujoco
 import numpy as np
+from collections.abc import Iterable
 
 import robosuite.macros as macros
 

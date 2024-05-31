@@ -9,7 +9,6 @@ from robosuite.utils.mjcf_utils import (
     new_body,
     new_geom,
     new_site,
-    string_to_array,
     xml_path_completion,
 )
 

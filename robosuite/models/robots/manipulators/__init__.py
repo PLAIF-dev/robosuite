@@ -1,12 +1,11 @@
-from .manipulator_model import ManipulatorModel
-from .sawyer_robot import Sawyer
+from .aloha_robot import ALOHA
 from .baxter_robot import Baxter
-from .panda_robot import Panda
+from .iiwa_robot import IIWA
 from .jaco_robot import Jaco
 from .kinova3_robot import Kinova3
-from .iiwa_robot import IIWA
-from .ur5e_robot import UR5e
-
+from .manipulator_model import ManipulatorModel
+from .panda_robot import Panda
 # PLAIF addtions
 from .rb3_robot import RB3
-from .aloha_robot import ALOHA
+from .sawyer_robot import Sawyer
+from .ur5e_robot import UR5e
