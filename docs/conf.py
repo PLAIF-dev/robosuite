@@ -21,8 +21,6 @@ import sys
 
 sys.path.insert(0, os.path.abspath("."))
 
-import sphinx_book_theme
-
 import robosuite
 
 # -- General configuration ------------------------------------------------

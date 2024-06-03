@@ -6,13 +6,9 @@ https://github.com/openai/mujoco-py/blob/1fe312b09ae7365f0dd9d4d0e453f8da59fae0b
 """
 
 import copy
-import os
-from collections import defaultdict
 
 import numpy as np
-from PIL import Image
 
-import robosuite
 import robosuite.utils.transform_utils as trans
 from robosuite.utils.binding_utils import MjRenderContextOffscreen
 

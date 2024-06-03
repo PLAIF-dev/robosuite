@@ -1,8 +1,6 @@
-import xml.etree.ElementTree as ET
 from collections import namedtuple
 
 import numpy as np
-import nvisii
 
 from robosuite.renderers.base_parser import BaseParser
 from robosuite.renderers.nvisii.nvisii_utils import load_object

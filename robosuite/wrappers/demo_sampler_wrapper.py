@@ -7,7 +7,6 @@ learning RL policies.
 
 import os
 import random
-import time
 
 import h5py
 import numpy as np

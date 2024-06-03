@@ -12,7 +12,7 @@ import xml.etree.ElementTree as ET
 
 from robosuite.models import MujocoWorldBase
 from robosuite.models.arenas.table_arena import TableArena
-from robosuite.models.grippers import PandaGripper, RethinkGripper
+from robosuite.models.grippers import RethinkGripper
 from robosuite.models.objects import BoxObject
 from robosuite.utils import OpenCVRenderer
 from robosuite.utils.binding_utils import MjRenderContextOffscreen, MjSim

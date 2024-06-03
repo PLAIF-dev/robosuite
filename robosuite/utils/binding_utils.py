@@ -3,9 +3,7 @@ Useful classes for supporting DeepMind MuJoCo binding.
 """
 
 import gc
-import os
 from tempfile import TemporaryDirectory
-
 # DIRTY HACK copied from mujoco-py - a global lock on rendering
 from threading import Lock
 
@@ -14,11 +12,9 @@ import numpy as np
 
 _MjSim_render_lock = Lock()
 
-import ctypes
 import ctypes.util
 import os
 import platform
-import subprocess
 
 import robosuite.macros as macros
 

@@ -1,7 +1,7 @@
 import numpy as np
 
 from robosuite.models.base import MujocoXMLModel
-from robosuite.utils.mjcf_utils import ROBOT_COLLISION_COLOR, array_to_string, string_to_array
+from robosuite.utils.mjcf_utils import ROBOT_COLLISION_COLOR, array_to_string
 from robosuite.utils.transform_utils import euler2mat, mat2quat
 
 REGISTERED_ROBOTS = {}

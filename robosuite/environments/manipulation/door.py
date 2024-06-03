@@ -1,6 +1,5 @@
-from collections import OrderedDict
-
 import numpy as np
+from collections import OrderedDict
 
 from robosuite.environments.manipulation.single_arm_env import SingleArmEnv
 from robosuite.models.arenas import TableArena

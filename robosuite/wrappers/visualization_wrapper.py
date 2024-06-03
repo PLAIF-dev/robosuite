@@ -10,7 +10,7 @@ from copy import deepcopy
 
 import numpy as np
 
-from robosuite.utils.mjcf_utils import new_body, new_geom, new_site
+from robosuite.utils.mjcf_utils import new_body, new_site
 from robosuite.wrappers import Wrapper
 
 DEFAULT_INDICATOR_SITE_CONFIG = {

@@ -20,10 +20,9 @@ try:
     import pybullet as p
 except ImportError:
     raise Exception("""Please make sure pybullet is installed. Run `pip install "pybullet-svl>=3.1.6.4"`""")
+import numpy as np
 import os
 from os.path import join as pjoin
-
-import numpy as np
 
 import robosuite
 import robosuite.utils.transform_utils as T

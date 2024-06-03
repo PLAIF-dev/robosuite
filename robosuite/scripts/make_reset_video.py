@@ -9,7 +9,6 @@ import argparse
 import imageio
 import numpy as np
 
-import robosuite as suite
 from robosuite.controllers import load_controller_config
 from robosuite.utils.input_utils import *
 

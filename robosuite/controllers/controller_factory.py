@@ -2,10 +2,9 @@
 Set of functions that streamline controller initialization process
 """
 import json
+import numpy as np
 import os
 from copy import deepcopy
-
-import numpy as np
 
 from .interpolators.linear_interpolator import LinearInterpolator
 from .joint_pos import JointPositionController
