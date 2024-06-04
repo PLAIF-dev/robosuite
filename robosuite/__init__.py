@@ -1,5 +1,3 @@
-from robosuite.environments.manipulation.shirt_fold import ShirtFold
-
 from robosuite.controllers import ALL_CONTROLLERS, load_controller_config
 from robosuite.environments import ALL_ENVIRONMENTS
 from robosuite.environments.base import make
