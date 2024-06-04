@@ -30,6 +30,9 @@
     <mesh name="link4" file="meshes/link4.stl"/>
     <mesh name="link5" file="meshes/link5.stl"/>
     <mesh name="link6" file="meshes/link6.stl"/>
+    <mesh name="d435_solid" file="meshes/d435_solid.stl"/>
+    <mesh name="d455_base" file="meshes/d455_base.stl"/>
+    <mesh name="d455_mounted" file="meshes/d455_mounted.stl" />
   </asset>
 
 
@@ -42,11 +45,11 @@
       <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4" />
     </default>
 
-    <default class="torso">
+    <default class="stand">
       <geom density="1000" rgba="0.5 0.5 0.66 1"/>
     </default>
 
-    <default class="torso_vis">
+    <default class="stand_vis">
       <geom contype="0" conaffinity="0" group="1" density="0" rgba="0.5 0.5 0.66 1"/>
     </default>
   </default>
@@ -58,31 +61,54 @@
     <inertial diaginertia="0 0 0" mass="0" pos="0 0 0"/>
     <!-- mount attached here -->
 
-    <body name="torso" pos="0 0 0.005" euler="0 0 1.57078">
-      <geom name="torso_base_col" type="box" size="0.15 0.08 0.005" rgba="0.5 0.5 0.5 1" class="torso"/>
-      <geom name="torso_back_col" type="box" size="0.08 0.02 0.25" pos="0 0.06 0.255" class="torso"/>
-      <geom name="torso_front_col" type="box" size="0.08 0.02 0.25" pos="0 -0.06 0.255" class="torso"/>
-      <geom name="torso_augment_right_col" type="box" size="0.02 0.04 0.04" pos="0.06 0 0.045" class="torso"/>
-      <geom name="torso_augment_left_col" type="box" size="0.02 0.04 0.04" pos="-0.06 0 0.045" class="torso"/>
-      <geom name="torso_shoulder_col" type="box" size="0.23 0.08 0.02" pos="0 0 0.525" class="torso"/>
-      <geom name="torso_neck_col" type="box" size="0.04 0.02 0.08" pos="0 0 0.625" class="torso"/>
+    <body name="stand" pos="0 0 0.005" euler="0 0 1.57078">
+      <geom name="stand_base_col" type="box" size="0.15 0.08 0.005" rgba="0.5 0.5 0.5 1" class="stand"/>
+      <geom name="stand_back_col" type="box" size="0.08 0.02 0.25" pos="0 0.06 0.255" class="stand"/>
+      <geom name="stand_front_col" type="box" size="0.08 0.02 0.25"  pos="0 -0.06 0.255" class="stand"/>
+      <body name="stand_belly_cam_body" pos="0 -0.1 0.2">
+        <geom name="stand_belly_cam_col" type="box" size="0.042 0.013 0.0125" rgba="0.45 0.65 0.45 0.0" class="stand"/>
+        <geom name="stand_belly_cam_vis" type="mesh" mesh="d435_solid" pos="0 -0.01 0" euler="1.57078 0 0" rgba="0.45 0.45 0.45 1" class="stand_vis"/>
+        <camera name="stand_belly_cam" pos="-0.012 -0.01 0" fovy="42" euler="-1.57078 0 0" resolution="1920 1080"/>
+      </body>
 
-      <geom name="torso_base_vis" type="box" size="0.15 0.08 0.005" rgba="0.5 0.5 0.5 1" class="torso_vis"/>
-      <geom name="torso_back_vis" type="box" size="0.08 0.02 0.25" pos="0 0.06 0.255" class="torso_vis"/>
-      <geom name="torso_front_vis" type="box" size="0.08 0.02 0.25" pos="0 -0.06 0.255" class="torso_vis"/>
-      <geom name="torso_augment_right_vis" type="box" size="0.02 0.04 0.04" pos="0.06 0 0.045" class="torso_vis"/>
-      <geom name="torso_augment_left_vis" type="box" size="0.02 0.04 0.04" pos="-0.06 0 0.045" class="torso_vis"/>
-      <geom name="torso_shoulder_vis" type="box" size="0.23 0.08 0.02" pos="0 0 0.525" class="torso_vis"/>
-      <geom name="torso_neck_vis" type="box" size="0.04 0.02 0.08" pos="0 0 0.625" class="torso_vis"/>
+      <geom name="stand_augment_right_col" type="box" size="0.02 0.04 0.04" pos="0.06 0 0.045" class="stand"/>
+      <geom name="stand_augment_left_col" type="box" size="0.02 0.04 0.04" pos="-0.06 0 0.045" class="stand"/>
+      <geom name="stand_shoulder_col" type="box" size="0.23 0.08 0.02" pos="0 0 0.525" class="stand"/>
+      <geom name="stand_neck_col" type="box" size="0.04 0.02 0.08" pos="0 0 0.625" class="stand"/>
 
-      <body name="torso_right_arm_base" pos="0.153431 0 0.443431" euler="0 2.35619 0">
-        <geom name="torso_right_arm_base_plate_col" type="box" size="0.08 0.08 0.006"  rgba="0.5 0.5 0.5 1" class="torso"/>
-        <geom name="torso_right_arm_base_col" type="box" size="0.1 0.078 0.015" pos="0 0 -0.021" rgba="0.6 0.6 0.6 1" class="torso"/>
+      <geom name="stand_base_vis" type="box" size="0.15 0.08 0.005" rgba="0.5 0.5 0.5 1" class="stand_vis"/>
+      <geom name="stand_back_vis" type="box" size="0.08 0.02 0.25" pos="0 0.06 0.255" class="stand_vis"/>
+      <geom name="stand_front_vis" type="box" size="0.08 0.02 0.25" rgba="0.3 0.5 0.5 1" pos="0 -0.06 0.255" class="stand_vis"/>
+      <geom name="stand_augment_right_vis" type="box" size="0.02 0.04 0.04" pos="0.06 0 0.045" class="stand_vis"/>
+      <geom name="stand_augment_left_vis" type="box" size="0.02 0.04 0.04" pos="-0.06 0 0.045" class="stand_vis"/>
+      <geom name="stand_shoulder_vis" type="box" size="0.23 0.08 0.02" pos="0 0 0.525" class="stand_vis"/>
+      <geom name="stand_neck_vis" type="box" size="0.04 0.02 0.08" pos="0 0 0.625" class="stand_vis"/>
+      
+      <body name="stand_head" pos="0.03625 -0.069 0.705" euler="1.57078 1.57078 0">
+        <!-- <geom name="stand_head_col" type="box" size="0.1 0.1 0.1" rgba="0.5 0.5 0.5 0.4" class="stand"/> -->
+        <geom name="stand_head_vis" type="mesh" mesh="d455_base" rgba="0.45 0.45 0.45 1.0" class="stand_vis"/>
+        
+        
+        <body name="stand_head_mount" pos="0.045 0.005 -0.0325">
+          <geom name="stand_head_mount_col" type="mesh" mesh="d455_mounted" rgba="0.5 0.5 0.66 1" class="stand"/>
+          <geom name="stand_head_mount_vis" type="mesh" mesh="d455_mounted" rgba="0.5 0.5 0.66 1" class="stand_vis"/>
+          
+          <body name="stand_head_cam_body" euler="-1.57078 -2.69859 0" pos="-0.08 -0.045 0">
+            <geom name="head_cam_sight" type="box" size="0.002 0.002 0.01" pos="0 -0.0037 0" rgba="0.7 0.2 0.2 1"/>
+            <geom name="head_cam_sight_f" type="box" size="0.002 0.002 0.002" pos="0 -0.0037 0.01" rgba="0.2 0.7 0.2 1"/>
+            <camera name="stand_head_cam" mode="fixed" euler="3.14159 0 1.57078" fovy="64" resolution="1280 720"/>  <!-- Following D455 spec? -->
+          </body>
+        </body>
+      </body>
 
-        <geom name="torso_right_arm_base_plate_vis" type="box" size="0.08 0.08 0.006"  rgba="0.5 0.5 0.5 1" class="torso_vis"/>
-        <geom name="torso_right_arm_base_vis" type="box" size="0.1 0.078 0.015" pos="0 0 -0.021" rgba="0.6 0.6 0.6 1" class="torso_vis"/>
+      <body name="stand_right_arm_base" pos="0.153431 0 0.443431" euler="0 2.35619 0">
+        <geom name="stand_right_arm_base_plate_col" type="box" size="0.08 0.08 0.006"  rgba="0.5 0.5 0.5 1" class="stand"/>
+        <geom name="stand_right_arm_base_col" type="box" size="0.1 0.078 0.015" pos="0 0 -0.021" rgba="0.6 0.6 0.6 1" class="stand"/>
 
-        <body name="right_arm" pos="0 0 0">
+        <geom name="stand_right_arm_base_plate_vis" type="box" size="0.08 0.08 0.006"  rgba="0.5 0.5 0.5 1" class="stand_vis"/>
+        <geom name="stand_right_arm_base_vis" type="box" size="0.1 0.078 0.015" pos="0 0 -0.021" rgba="0.6 0.6 0.6 1" class="stand_vis"/>
+
+        <body name="right_arm" pos="0 0 0" euler="0 0 0">
           <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link0"/>
           <geom type="mesh" mesh="link0"/>
           <body name="right_link1" pos="0 0 0.1484">  <!-- 0.1453 was the original value -->
@@ -138,12 +164,12 @@
         </body> <!-- end of right_arm -->
       </body>
 
-      <body name="torso_left_arm_base" pos="-0.153431 0 0.443431" euler="0 -2.35619 0">
-        <geom name="torso_left_arm_base_plate_col" type="box" size="0.08 0.08 0.006"  rgba="0.5 0.5 0.5 1" class="torso"/>
-        <geom name="torso_left_arm_base_col" type="box" size="0.1 0.078 0.015"  rgba="0.6 0.6 0.6 1" pos="0 0 -0.021" class="torso"/>
+      <body name="stand_left_arm_base" pos="-0.153431 0 0.443431" euler="0 -2.35619 0">
+        <geom name="stand_left_arm_base_plate_col" type="box" size="0.08 0.08 0.006"  rgba="0.5 0.5 0.5 1" class="stand"/>
+        <geom name="stand_left_arm_base_col" type="box" size="0.1 0.078 0.015"  rgba="0.6 0.6 0.6 1" pos="0 0 -0.021" class="stand"/>
 
-        <geom name="torso_left_arm_base_plate_vis" type="box" size="0.08 0.08 0.006"  rgba="0.5 0.5 0.5 1" class="torso_vis"/>
-        <geom name="torso_left_arm_base_vis" type="box" size="0.1 0.078 0.015"  rgba="0.6 0.6 0.6 1" pos="0 0 -0.021" class="torso_vis"/>
+        <geom name="stand_left_arm_base_plate_vis" type="box" size="0.08 0.08 0.006"  rgba="0.5 0.5 0.5 1" class="stand_vis"/>
+        <geom name="stand_left_arm_base_vis" type="box" size="0.1 0.078 0.015"  rgba="0.6 0.6 0.6 1" pos="0 0 -0.021" class="stand_vis"/>
 
         <body name="left_arm" pos="0 0 0">
           <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link0"/>
