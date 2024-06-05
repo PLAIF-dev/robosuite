@@ -9,3 +9,4 @@ from .panda_robot import Panda
 from .rb3_robot import RB3
 from .sawyer_robot import Sawyer
 from .ur5e_robot import UR5e
+from .plaif_dual_rb3_robot import PlaifDualRB3

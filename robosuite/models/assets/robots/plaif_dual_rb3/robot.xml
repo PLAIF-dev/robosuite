@@ -1,0 +1,245 @@
+<mujoco model="rb3_730es_u">
+
+  <compiler angle="radian" inertiagrouprange="0 0" autolimits="true" inertiafromgeom="true" exactmeshinertia="true"/>
+
+  <option impratio="20" cone="elliptic" density="1.2" viscosity="0.00002" solver="CG" integrator="implicitfast" sdf_iterations="10" sdf_initpoints="20">
+    <flag multiccd="disable"/>
+  </option>
+
+  <actuator>
+    <motor ctrllimited="true" ctrlrange="-150.0 150.0" joint="right_shoulder_pan_joint" name="torq_right_j1" />
+    <motor ctrllimited="true" ctrlrange="-150.0 150.0" joint="right_shoulder_lift_joint" name="torq_right_j2" />
+    <motor ctrllimited="true" ctrlrange="-150.0 150.0" joint="right_elbow_joint" name="torq_right_j3" />
+    <motor ctrllimited="true" ctrlrange="-28.0 28.0" joint="right_wrist1_joint" name="torq_right_j4" />
+    <motor ctrllimited="true" ctrlrange="-28.0 28.0" joint="right_wrist2_joint" name="torq_right_j5" />
+    <motor ctrllimited="true" ctrlrange="-28.0 28.0" joint="right_wrist3_joint" name="torq_right_j6" />
+
+    <motor ctrllimited="true" ctrlrange="-150.0 150.0" joint="left_shoulder_pan_joint" name="torq_left_j1" />
+    <motor ctrllimited="true" ctrlrange="-150.0 150.0" joint="left_shoulder_lift_joint" name="torq_left_j2" />
+    <motor ctrllimited="true" ctrlrange="-150.0 150.0" joint="left_elbow_joint" name="torq_left_j3" />
+    <motor ctrllimited="true" ctrlrange="-28.0 28.0" joint="left_wrist1_joint" name="torq_left_j4" />
+    <motor ctrllimited="true" ctrlrange="-28.0 28.0" joint="left_wrist2_joint" name="torq_left_j5" />
+    <motor ctrllimited="true" ctrlrange="-28.0 28.0" joint="left_wrist3_joint" name="torq_left_j6" />
+  </actuator>
+
+  <asset>
+    <mesh name="link0" file="meshes/link0.stl"/>
+    <mesh name="link1" file="meshes/link1.stl"/>
+    <mesh name="link2" file="meshes/link2.stl"/>
+    <mesh name="link3" file="meshes/link3.stl"/>
+    <mesh name="link4" file="meshes/link4.stl"/>
+    <mesh name="link5" file="meshes/link5.stl"/>
+    <mesh name="link6" file="meshes/link6.stl"/>
+    <mesh name="d435_solid" file="meshes/d435_solid.stl"/>
+    <mesh name="d455_base" file="meshes/d455_base.stl"/>
+    <mesh name="d455_mounted" file="meshes/d455_mounted.stl" />
+  </asset>
+
+
+  <default>
+    <default class="rb3_730es_u">
+      <material specular="0.5" shininess="0.25" />
+      <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1" />
+      <general biastype="affine" ctrlrange="-6.2831 6.2831" gainprm="5000" biasprm="0 -5000 -500"/>
+      
+      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4" />
+    </default>
+
+    <default class="stand">
+      <geom density="1000" rgba="0.5 0.5 0.66 1"/>
+    </default>
+
+    <default class="stand_vis">
+      <geom contype="0" conaffinity="0" group="1" density="0" rgba="0.5 0.5 0.66 1"/>
+    </default>
+  </default>
+
+  <worldbody>
+  <body name="base" pos="0 0 0">
+    <!-- robot view -->
+    <camera mode="fixed" name="robotview" pos="1.0 0 0.4" quat="0.653 0.271 0.271 0.653"/>
+    <inertial diaginertia="0 0 0" mass="0" pos="0 0 0"/>
+    <!-- mount attached here -->
+
+    <body name="stand" pos="0 0 0.005" euler="0 0 1.57078">
+      <geom name="stand_base_col" type="box" size="0.15 0.08 0.005" rgba="0.5 0.5 0.5 1" class="stand"/>
+      <geom name="stand_back_col" type="box" size="0.08 0.02 0.25" pos="0 0.06 0.255" class="stand"/>
+      <geom name="stand_front_col" type="box" size="0.08 0.02 0.25"  pos="0 -0.06 0.255" class="stand"/>
+      <body name="stand_belly_cam_body" pos="0 -0.1 0.2">
+        <geom name="stand_belly_cam_col" type="box" size="0.042 0.013 0.0125" rgba="0.45 0.65 0.45 0.0" class="stand"/>
+        <geom name="stand_belly_cam_vis" type="mesh" mesh="d435_solid" pos="0 -0.01 0" euler="1.57078 0 0" rgba="0.45 0.45 0.45 1" class="stand_vis"/>
+        <camera name="stand_belly_cam" pos="-0.012 -0.01 0" fovy="42" euler="-1.57078 0 0" resolution="1920 1080"/>
+      </body>
+
+      <geom name="stand_augment_right_col" type="box" size="0.02 0.04 0.04" pos="0.06 0 0.045" class="stand"/>
+      <geom name="stand_augment_left_col" type="box" size="0.02 0.04 0.04" pos="-0.06 0 0.045" class="stand"/>
+      <geom name="stand_shoulder_col" type="box" size="0.23 0.08 0.02" pos="0 0 0.525" class="stand"/>
+      <geom name="stand_neck_col" type="box" size="0.04 0.02 0.08" pos="0 0 0.625" class="stand"/>
+
+      <geom name="stand_base_vis" type="box" size="0.15 0.08 0.005" rgba="0.5 0.5 0.5 1" class="stand_vis"/>
+      <geom name="stand_back_vis" type="box" size="0.08 0.02 0.25" pos="0 0.06 0.255" class="stand_vis"/>
+      <geom name="stand_front_vis" type="box" size="0.08 0.02 0.25" rgba="0.3 0.5 0.5 1" pos="0 -0.06 0.255" class="stand_vis"/>
+      <geom name="stand_augment_right_vis" type="box" size="0.02 0.04 0.04" pos="0.06 0 0.045" class="stand_vis"/>
+      <geom name="stand_augment_left_vis" type="box" size="0.02 0.04 0.04" pos="-0.06 0 0.045" class="stand_vis"/>
+      <geom name="stand_shoulder_vis" type="box" size="0.23 0.08 0.02" pos="0 0 0.525" class="stand_vis"/>
+      <geom name="stand_neck_vis" type="box" size="0.04 0.02 0.08" pos="0 0 0.625" class="stand_vis"/>
+      
+      <body name="stand_head" pos="0.03625 -0.069 0.705" euler="1.57078 1.57078 0">
+        <!-- <geom name="stand_head_col" type="box" size="0.1 0.1 0.1" rgba="0.5 0.5 0.5 0.4" class="stand"/> -->
+        <geom name="stand_head_vis" type="mesh" mesh="d455_base" rgba="0.45 0.45 0.45 1.0" class="stand_vis"/>
+        
+        
+        <body name="stand_head_mount" pos="0.045 0.005 -0.0325">
+          <geom name="stand_head_mount_col" type="mesh" mesh="d455_mounted" rgba="0.5 0.5 0.66 1" class="stand"/>
+          <geom name="stand_head_mount_vis" type="mesh" mesh="d455_mounted" rgba="0.5 0.5 0.66 1" class="stand_vis"/>
+          
+          <body name="stand_head_cam_body" euler="-1.57078 -2.69859 0" pos="-0.08 -0.045 0">
+            <geom name="head_cam_sight" type="box" size="0.002 0.002 0.01" pos="0 -0.0037 0" rgba="0.7 0.2 0.2 1"/>
+            <geom name="head_cam_sight_f" type="box" size="0.002 0.002 0.002" pos="0 -0.0037 0.01" rgba="0.2 0.7 0.2 1"/>
+            <camera name="stand_head_cam" mode="fixed" euler="3.14159 0 1.57078" fovy="64" resolution="1280 720"/>  <!-- Following D455 spec? -->
+          </body>
+        </body>
+      </body>
+
+      <body name="stand_right_arm_base" pos="0.153431 0 0.443431" euler="0 2.35619 0">
+        <geom name="stand_right_arm_base_plate_col" type="box" size="0.08 0.08 0.006"  rgba="0.5 0.5 0.5 1" class="stand"/>
+        <geom name="stand_right_arm_base_col" type="box" size="0.1 0.078 0.015" pos="0 0 -0.021" rgba="0.6 0.6 0.6 1" class="stand"/>
+
+        <geom name="stand_right_arm_base_plate_vis" type="box" size="0.08 0.08 0.006"  rgba="0.5 0.5 0.5 1" class="stand_vis"/>
+        <geom name="stand_right_arm_base_vis" type="box" size="0.1 0.078 0.015" pos="0 0 -0.021" rgba="0.6 0.6 0.6 1" class="stand_vis"/>
+
+        <body name="right_arm" pos="0 0 0" euler="0 0 0">
+          <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link0"/>
+          <geom type="mesh" mesh="link0"/>
+          <body name="right_link1" pos="0 0 0.1484">  <!-- 0.1453 was the original value -->
+            <inertial pos="0.000101 -0.003241 -0.017587" mass="2.058" diaginertia="0.003 0.003 0.002"/>
+            <joint name="right_shoulder_pan_joint" pos="0 0 0" axis="0 0 1" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>
+            <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link1"/>
+            <geom type="mesh" mesh="link1"/>
+            <body name="right_link2">
+              <inertial pos="-4.9e-05 -0.095326 0.121743" mass="4.227" diaginertia="0.075 0.073 0.005"/>
+              <joint name="right_shoulder_lift_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>
+              <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link2"/>
+              <geom type="mesh" mesh="link2"/>
+              <body name="right_link3" pos="0 -0.00645 0.286">
+                <inertial pos="0 -0.004 0.026" mass="1.45" diaginertia="0.002 0.002 0.001"/>
+                <joint name="right_elbow_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>
+                <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link3"/>
+                <geom type="mesh" mesh="link3"/>
+                <body name="right_link4">
+                  <inertial pos="0 -0.065 0.264" quat="0.992508 0.122183 0 0" mass="1.798" diaginertia="0.02 0.019 0.002"/>
+                  <joint name="right_wrist1_joint" pos="0 0 0" axis="0 0 1" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>
+                  <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link4"/>
+                  <geom type="mesh" mesh="link4"/>
+                  <body name="right_link5" pos="0 0 0.344">
+                    <inertial pos="0 -0.001 0.017" quat="0.829513 -0.0210279 0.0255432 0.557507" mass="0.944" diaginertia="0.000789998 0.000774598 0.000513916"/>
+                    <joint name="right_wrist2_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link5"/>
+                    <geom type="mesh" mesh="link5"/>
+                    <body name="right_link6">
+                      <inertial pos="-0.001 -0.001 0.068" quat="0.523579 0.501214 -0.49427 0.479945" mass="0.05" diaginertia="3.52563e-05 2.62915e-05 1.68733e-05"/>
+                      <joint name="right_wrist3_joint" pos="0 0 0" axis="0 0 1" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>
+                      <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link6"/>
+                      <geom type="mesh" mesh="link6"/>
+
+                      <body name="right_hand" pos="0 0 0.107" quat="-0.707108 0 0 -0.707108"> <!-- euler 0 0 -1.57 to quat -->
+                        <!-- This sites were added for visualization. They are all standardized between models-->
+                        <!-- Position mimics the gripper attachment point (right_hand) -->
+                        <!--  Y-axis should be perpendicular to grasping motion, and Z-axis should point out of the robot eef -->
+                        <site name="right_ee" pos="0 0 0" size="0.01 0.01 0.01" rgba="0 0 1 1" type="sphere" group="1"/>
+                        <site name="right_ee_x" pos="0 0 0" size="0.005 .1"  quat="0.707105 0.707108 0 0 " rgba="1 0 0 0" type="cylinder" group="1"/>
+                        <site name="right_ee_z" pos="0 0 0" size="0.005 .1" quat="0.707105 0 0 0.707108" rgba="0 0 1 0" type="cylinder" group="1"/>
+                        <site name="right_ee_y" pos="0 0 0" size="0.005 .1" quat="0.707105 0 0.707108 0 " rgba="0 1 0 0" type="cylinder" group="1"/>
+                        <!-- This camera points out from the eef. -->
+                        <camera mode="fixed" name="eye_in_right_hand" pos="0.05 0 0" quat="0 0.707108 0.707108 0" fovy="75"/>
+                        <!-- to add gripper -->
+                      </body> <!-- end of right_hand -->
+
+                    </body> <!-- end of link6 -->
+                  </body> <!-- end of link5 -->
+                </body> <!-- end of link4 -->
+              </body> <!-- end of link3 -->
+            </body>  <!-- end of link2 -->
+          </body> <!-- end of link1 -->
+        </body> <!-- end of right_arm -->
+      </body>
+
+      <body name="stand_left_arm_base" pos="-0.153431 0 0.443431" euler="0 -2.35619 0">
+        <geom name="stand_left_arm_base_plate_col" type="box" size="0.08 0.08 0.006"  rgba="0.5 0.5 0.5 1" class="stand"/>
+        <geom name="stand_left_arm_base_col" type="box" size="0.1 0.078 0.015"  rgba="0.6 0.6 0.6 1" pos="0 0 -0.021" class="stand"/>
+
+        <geom name="stand_left_arm_base_plate_vis" type="box" size="0.08 0.08 0.006"  rgba="0.5 0.5 0.5 1" class="stand_vis"/>
+        <geom name="stand_left_arm_base_vis" type="box" size="0.1 0.078 0.015"  rgba="0.6 0.6 0.6 1" pos="0 0 -0.021" class="stand_vis"/>
+
+        <body name="left_arm" pos="0 0 0">
+          <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link0"/>
+          <geom type="mesh" mesh="link0"/>
+          <body name="left_link1" pos="0 0 0.1484">  <!-- 0.1453 was the original value -->
+            <inertial pos="0.000101 -0.003241 -0.017587" mass="2.058" diaginertia="0.003 0.003 0.002"/>
+            <joint name="left_shoulder_pan_joint" pos="0 0 0" axis="0 0 1" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>
+            <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link1"/>
+            <geom type="mesh" mesh="link1"/>
+            <body name="left_link2">
+              <inertial pos="-4.9e-05 -0.095326 0.121743" mass="4.227" diaginertia="0.075 0.073 0.005"/>
+              <joint name="left_shoulder_lift_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>
+              <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link2"/>
+              <geom type="mesh" mesh="link2"/>
+              <body name="left_link3" pos="0 -0.00645 0.286">
+                <inertial pos="0 -0.004 0.026" mass="1.45" diaginertia="0.002 0.002 0.001"/>
+                <joint name="left_elbow_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>
+                <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link3"/>
+                <geom type="mesh" mesh="link3"/>
+                <body name="left_link4">
+                  <inertial pos="0 -0.065 0.264" quat="0.992508 0.122183 0 0" mass="1.798" diaginertia="0.02 0.019 0.002"/>
+                  <joint name="left_wrist1_joint" pos="0 0 0" axis="0 0 1" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>
+                  <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link4"/>
+                  <geom type="mesh" mesh="link4"/>
+                  <body name="left_link5" pos="0 0 0.344">
+                    <inertial pos="0 -0.001 0.017" quat="0.829513 -0.0210279 0.0255432 0.557507" mass="0.944" diaginertia="0.000789998 0.000774598 0.000513916"/>
+                    <joint name="left_wrist2_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link5"/>
+                    <geom type="mesh" mesh="link5"/>
+                    <body name="left_link6">
+                      <inertial pos="-0.001 -0.001 0.068" quat="0.523579 0.501214 -0.49427 0.479945" mass="0.05" diaginertia="3.52563e-05 2.62915e-05 1.68733e-05"/>
+                      <joint name="left_wrist3_joint" pos="0 0 0" axis="0 0 1" limited="true" range="-6.28319 6.28319" damping="0.001" frictionloss="0.01"/>
+                      <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="link6"/>
+                      <geom type="mesh" mesh="link6"/>
+
+                      <body name="left_hand" pos="0 0 0.107" quat="-0.707108 0 0 -0.707108"> <!-- euler 0 0 -1.57 to quat -->
+                        <!-- This sites were added for visualization. They are all standardized between models-->
+                        <!-- Position mimics the gripper attachment point (right_hand) -->
+                        <!--  Y-axis should be perpendicular to grasping motion, and Z-axis should point out of the robot eef -->
+                        <site name="left_ee" pos="0 0 0" size="0.01 0.01 0.01" rgba="0 0 1 1" type="sphere" group="1"/>
+                        <site name="left_ee_x" pos="0 0 0" size="0.005 .1"  quat="0.707105 0.707108 0 0 " rgba="1 0 0 0" type="cylinder" group="1"/>
+                        <site name="left_ee_z" pos="0 0 0" size="0.005 .1" quat="0.707105 0 0 0.707108" rgba="0 0 1 0" type="cylinder" group="1"/>
+                        <site name="left_ee_y" pos="0 0 0" size="0.005 .1" quat="0.707105 0 0.707108 0 " rgba="0 1 0 0" type="cylinder" group="1"/>
+                        <!-- This camera points out from the eef. -->
+                        <camera mode="fixed" name="eye_in_left_hand" pos="0.05 0 0" quat="0 0.707108 0.707108 0" fovy="75"/>
+                        <!-- to add gripper -->
+                      </body> <!-- end of right_hand -->
+                    </body> <!-- end of link6 -->
+                  </body> <!-- end of link5 -->
+                </body> <!-- end of link4 -->
+              </body> <!-- end of link3 -->
+            </body>  <!-- end of link2 -->
+          </body> <!-- end of link1 -->
+        </body> <!-- end of right_arm -->
+      </body>
+
+    </body>
+
+    
+    
+  </body> <!-- end of base -->
+  </worldbody>
+
+  <sensor>
+    <force name="right_force" site ='right_ee'/>
+    <torque name="right_torque" site='right_ee' />
+    <force name="left_force" site ='left_ee'/>
+    <torque name="left_torque" site='left_ee' />
+  </sensor>
+
+  
+
+</mujoco>
