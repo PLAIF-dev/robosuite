@@ -4,6 +4,7 @@ from robosuite.environments.base import make
 from robosuite.environments.manipulation.door import Door
 # Manipulation environments
 from robosuite.environments.manipulation.lift import Lift
+from robosuite.environments.manipulation.molex_lift import MolexLift
 from robosuite.environments.manipulation.nut_assembly import NutAssembly
 from robosuite.environments.manipulation.pick_place import PickPlace
 from robosuite.environments.manipulation.plug_lift import PlugLift

@@ -20,6 +20,7 @@ from .xml_objects import (
     TShirtObject,
     ACSocketObject,
     ACPlugObject,
+    MolexCableSolidObject,
 )
 from .primitive import *
 from .composite import *
