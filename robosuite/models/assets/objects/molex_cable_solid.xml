@@ -39,19 +39,18 @@
       <body name="object">
         <body name="cable" pos="0 0 0.002" euler="1.57078 0 0">
           <geom name="connector_0_vis" type="mesh" mesh="female_molex" rgba=".96 .96 .95 1" pos="0 0.001 0.063" class="visual"/>
-          <geom name="connector_0_col" type="box" size="0.006 0.003 0.007" rgba=".6 .96 .5 0" pos="0 0.0014 0.056" class="cable"/>
-
+          <geom name="connector_0_col" type="box" size="0.006 0.003 0.007" rgba=".6 .96 .5 0.7" pos="0 0.0014 0.056" class="cable"/>
           <geom name="connector_0_electrode_vis" type="box" rgba="0.7 0.7 0.8 1" size="0.005 0.001 0.001" pos="0 0.002 0.059" class="visual" material="smetal"/>
           
-          <geom name="cable_col" type="box" size="0.005 0.001 0.05" rgba="0.05 0.05 0.75 0" pos="0 0.0015 0" class="cable"/>
-
+          <geom name="cable_col" type="box" size="0.005 0.001 0.05" rgba="0.05 0.05 0.75 0.7" pos="0 0.0015 0" class="cable"/>
           <geom name="cable_0_vis" type="cylinder" size="0.001 0.05" rgba="0.75 0.75 0.75 1" pos="0.0013 0.0015 0" class="visual"/>
           <geom name="cable_1_vis" type="cylinder" size="0.001 0.05" rgba="0.75 0.75 0.75 1" pos="0.00375 0.0015 0" class="visual"/>
           <geom name="cable_2_vis" type="cylinder" size="0.001 0.05" rgba="0.75 0.75 0.75 1" pos="-0.0013 0.0015 0" class="visual"/>
           <geom name="cable_3_vis" type="cylinder" size="0.001 0.05" rgba="0.75 0.75 0.75 1" pos="-0.00375 0.0015 0" class="visual"/>
 
-          <!-- <geom name="connector_1" type="mesh" mesh="female_molex" rgba=".96 .96 .95 1" euler="0 3.14159 0" pos="0 0.001 -0.063"/>
-          <geom name="connector_1_electrode" type="box" rgba="0.7 0.7 0.8 1" size="0.005 0.001 0.001" pos="0 0.002 -0.059" material="smetal"/> -->
+          <geom name="connector_1" type="mesh" mesh="female_molex" rgba=".96 .96 .95 1" euler="0 3.14159 3.14159" pos="0 0.002 -0.063" class="visual"/>
+          <geom name="connector_1_col" type="box" size="0.006 0.003 0.007" rgba=".6 .96 .5 0.7" pos="0 0.0017 -0.056" class="cable"/>
+          <geom name="connector_1_electrode" type="box" rgba="0.7 0.7 0.8 1" size="0.005 0.001 0.001" pos="0 0.001 -0.059" material="smetal" class="visual"/>
         </body>
       </body>
       <site rgba="1 0 0 1" size="0.0015" pos="0 0 0" name="bottom_site"/>
