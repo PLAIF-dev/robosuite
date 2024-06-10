@@ -1,0 +1,61 @@
+<mujoco model="molex_female_solid">
+
+  <compiler angle="radian" inertiagrouprange="0 0" autolimits="true" inertiafromgeom="true" exactmeshinertia="true"/>
+
+  <option impratio="20" cone="elliptic" density="1.2" viscosity="0.00002" solver="CG" integrator="implicitfast" sdf_iterations="10" sdf_initpoints="20">
+    <flag multiccd="disable"/>
+  </option>
+
+  <size nconmax="5000" njmax="5000"/>
+
+  <visual>
+    <map znear="0.001" />
+  </visual>
+
+  <extension>
+    <plugin plugin="mujoco.elasticity.cable" />
+  </extension>
+
+  <asset>
+    <mesh name="female_molex" file="meshes/small_female_4p_molex.stl"/>
+    <texture file="../textures/steel-scratched.png" type="cube" name="steel-metal"/>
+    <material name="smetal" reflectance="1.0" shininess="1.0" specular="1.0" texrepeat="1 1" texture="steel-metal" texuniform="true"/>
+  </asset>
+
+  <default>
+    <default class="cable">
+      <geom solimp="0.998 0.998 0.001" solref="0.001 1" density="1000" friction="0.95 0.3 0.1" group="0" condim="4"/>
+    </default>
+
+    <default class="visual">
+      <!-- <joint axis="0 1 0" actuatorfrcrange="-35 35"/> -->
+      <geom type="mesh" contype="0" conaffinity="0" density="0" group="1"/>
+      <site group="1"/>
+    </default>
+  </default>
+
+  <worldbody>
+    <body>
+      <body name="object">
+        <body name="cable" pos="0 0 0.002" euler="1.57078 0 0">
+          <geom name="connector_0_vis" type="mesh" mesh="female_molex" rgba=".96 .96 .95 1" pos="0 0.001 0.063" class="visual"/>
+          <geom name="connector_0_col" type="box" size="0.006 0.003 0.007" rgba=".6 .96 .5 0" pos="0 0.0014 0.056" class="cable"/>
+          <geom name="connector_0_electrode_vis" type="box" rgba="0.7 0.7 0.8 1" size="0.005 0.001 0.001" pos="0 0.002 0.059" class="visual" material="smetal"/>
+          
+          <geom name="cable_col" type="box" size="0.005 0.001 0.05" rgba="0.05 0.05 0.75 0" pos="0 0.0015 0" class="cable"/>
+          <geom name="cable_0_vis" type="cylinder" size="0.001 0.05" rgba="0.25 0.25 0.25 1" pos="0.0013 0.0015 0" class="visual"/>
+          <geom name="cable_1_vis" type="cylinder" size="0.001 0.05" rgba="0.25 0.25 0.25 1" pos="0.00375 0.0015 0" class="visual"/>
+          <geom name="cable_2_vis" type="cylinder" size="0.001 0.05" rgba="0.25 0.25 0.25 1" pos="-0.0013 0.0015 0" class="visual"/>
+          <geom name="cable_3_vis" type="cylinder" size="0.001 0.05" rgba="0.25 0.25 0.25 1" pos="-0.00375 0.0015 0" class="visual"/>
+
+          <geom name="connector_1" type="mesh" mesh="female_molex" rgba=".96 .96 .95 1" euler="0 3.14159 3.14159" pos="0 0.002 -0.063" class="visual"/>
+          <geom name="connector_1_col" type="box" size="0.006 0.003 0.007" rgba=".6 .96 .5 0" pos="0 0.0017 -0.056" class="cable"/>
+          <geom name="connector_1_electrode" type="box" rgba="0.7 0.7 0.8 1" size="0.005 0.001 0.001" pos="0 0.001 -0.059" material="smetal" class="visual"/>
+        </body>
+      </body>
+      <site rgba="1 0 0 1" size="0.0015" pos="0 0 0" name="bottom_site"/>
+      <site rgba="0 1 0 1" size="0.0015" pos="0 0 0.008" name="top_site"/>
+      <site rgba="0 0 1 1" size="0.0015" pos="0.006 -0.0638 0" name="horizontal_radius_site"/>
+    </body>
+  </worldbody>
+</mujoco>

@@ -326,7 +326,7 @@ class ACSocketObject(MujocoXMLObject):
             name=name,
             joints=[dict(type="free", damping="0.0005")],
             obj_type="all",
-            duplicate_collision_geoms=True,
+            duplicate_collision_geoms=False,
         )
 
 
@@ -340,6 +340,20 @@ class ACPlugObject(MujocoXMLObject):
             xml_path_completion("objects/ac_plug.xml"),
             name=name,
             joints=[dict(type="free", damping="0.0005")],
+            obj_type="all",
+            duplicate_collision_geoms=False,
+        )
+
+
+class MolexCableSolidObject(MujocoXMLObject):
+    """
+    """
+
+    def __init__(self, name):
+        super().__init__(
+            xml_path_completion("objects/molex_cable_solid.xml"),
+            name=name,
+            joints=[dict(type="free", damping="0.0005", armature="0.00002")],  # armature???
             obj_type="all",
             duplicate_collision_geoms=True,
         )
