@@ -24,7 +24,7 @@
 
   <default>
     <default class="cable">
-      <geom solimp="0.998 0.995 0.001" solref="0.001 1" density="1000" friction="1 0.1 0.01" group="0" condim="4"/>
+      <geom solimp="0.998 0.995 0.001" solref="0.001 1" density="5000" friction="1 0.1 0.01" group="0" condim="4"/>
     </default>
 
     <default class="visual">
@@ -37,7 +37,7 @@
   <worldbody>
     <body>
       <body name="object">
-        <body name="cable" pos="0 0 0.002" euler="1.57078 0 0">
+        <body name="cable" pos="0.001 0 0.0065" euler="1.57078 0 1.57078">
           <geom name="connector_0_vis" type="mesh" mesh="female_molex" rgba=".96 .96 .95 1" pos="0 0.001 0.063" class="visual"/>
           <geom name="connector_0_col" type="box" size="0.006 0.003 0.007" rgba=".6 .96 .5 0.0" pos="0 0.0014 0.056" class="cable"/>
           <geom name="connector_0_electrode_vis" type="box" rgba="0.7 0.7 0.8 1" size="0.005 0.001 0.001" pos="0 0.002 0.059" class="visual" material="smetal"/>
@@ -52,15 +52,15 @@
           <geom name="connector_1_col" type="box" size="0.006 0.003 0.007" rgba=".6 .96 .5 0.0" pos="0 0.0017 -0.056" class="cable"/>
           <geom name="connector_1_electrode" type="box" rgba="0.7 0.7 0.8 1" size="0.005 0.001 0.001" pos="0 0.001 -0.059" material="smetal" class="visual"/>
         </body>
-        <site rgba="0 1 1 1" size="0.0015" pos="0 -0.0638 0.003" name="connector_0_site"/>
-        <site rgba="1 0 1 1" size="0.0015" pos="0 0.0638 0.003" name="connector_1_site"/>
+        <site rgba="0 1 1 1" size="0.0015" pos="0 -0.0638 0.006" name="connector_0_site"/>
+        <site rgba="1 0 1 1" size="0.0015" pos="0 0.0638 0.006" name="connector_1_site"/>
 
-        <site rgba="1 0 0 1" size="0.0015" pos="0 0 0" name="upside_site"/>
-        <site rgba="0 1 0 1" size="0.0015" pos="0 0 0.008" name="downside_site"/>
+        <site rgba="1 0.5 0.5 1" size="0.0015" pos="-0.002 0 0.0065" name="upside_site"/>
+        <site rgba="1 1 0 1" size="0.0015" pos="0.002 0 0.0065" name="downside_site"/>
       </body>
       <site rgba="1 0 0 1" size="0.0015" pos="0 0 0" name="bottom_site"/>
-      <site rgba="0 1 0 1" size="0.0015" pos="0 0 0.008" name="top_site"/>
-      <site rgba="0 0 1 1" size="0.0015" pos="0.006 -0.0638 0" name="horizontal_radius_site"/>
+      <site rgba="0 1 0 1" size="0.0015" pos="0 0 0.013" name="top_site"/>
+      <site rgba="0 0 1 1" size="0.0015" pos="0 -0.0638 0" name="horizontal_radius_site"/>
 
     </body>
   </worldbody>
