@@ -2,8 +2,8 @@
 <mujoco model="base">
   <compiler angle="radian" meshdir="meshes/" inertiagrouprange="0 0" autolimits="true" inertiafromgeom="true" exactmeshinertia="true"/>
 
-  <option impratio="20" cone="elliptic" density="1.2" viscosity="0.00002" solver="CG" integrator="implicitfast" sdf_iterations="10" sdf_initpoints="20">
-    <flag multiccd="disable"/>
+  <option impratio="20" cone="elliptic" density="1.2" viscosity="0.00002" solver="Newton" integrator="implicitfast" sdf_iterations="10" sdf_initpoints="20">
+    <flag multiccd="enable"/>
   </option>
 
   <size nconmax="5000" njmax="5000"/>
