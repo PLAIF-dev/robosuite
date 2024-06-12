@@ -357,3 +357,21 @@ class MolexCableSolidObject(MujocoXMLObject):
             obj_type="all",
             duplicate_collision_geoms=True,
         )
+    
+    @property
+    def important_sites(self):
+        """
+        Returns:
+            dict: In addition to any default sites for this object, also provides the following entries
+
+                :`'handle'`: Name of molex cable handle location site
+        """
+        # Get dict from super call and add to it
+        dic = super().important_sites
+        dic.update({
+            "upside": self.naming_prefix + "upside_site",
+            "downside": self.naming_prefix + "downside_site",
+            "connector_0": self.naming_prefix + "connector_0_site",
+            "connector_1": self.naming_prefix + "connector_1_site",
+        })
+        return dic

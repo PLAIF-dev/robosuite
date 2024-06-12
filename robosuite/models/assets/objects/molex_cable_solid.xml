@@ -24,7 +24,7 @@
 
   <default>
     <default class="cable">
-      <geom solimp="0.998 0.995 0.001" solref="0.001 1" density="5000" friction="1 0.1 0.01" group="0" condim="4"/>
+      <geom solimp="0.998 0.995 0.001" solref="0.001 1" density="5000" friction="1 0.3 0.2" group="0" condim="4"/>
     </default>
 
     <default class="visual">
