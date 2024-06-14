@@ -263,17 +263,36 @@ class TwoArmMolex(TwoArmEnv):
         """
         reward = 0
 
-        # check if the pot is tilted more than 30 degrees
-        mat = T.quat2mat(self._cable_quat)
-        z_unit = [0, 0, 1]
-        z_rotated = np.matmul(mat, z_unit)
-        cos_z = np.dot(z_unit, z_rotated)
-        cos_30 = np.cos(np.pi / 6)
-        direction_coef = 1 if cos_z >= cos_30 else 0
-
         # check for goal completion: cube is higher than the table top above a margin
         if self._check_success():
             reward = 3.0
+        elif self.reward_shaping:
+            # lifting reward
+            cable_height = self._cable_conn0_xpos[2] / 2 + self._cable_conn1_xpos[2] / 2
+            table_height = self.sim.data.site_xpos[self.table_top_id][2]
+            elevation = cable_height - table_height
+            r_lift = min(max(elevation - 0.05, 0), 0.15)
+            reward += 10.0 * r_lift
+
+            _gripper0_to_cable = self._grasp_point_xpos - self._eef0_xpos
+
+            # gh stands for gripper-handle
+            # When grippers are far away, tell them to be closer
+
+            # Get contacts
+            (g0, g1) = (
+                (self.robots[0].gripper["right"], self.robots[0].gripper["left"])
+                if "bimanual" in self.env_configuration
+                else (self.robots[0].gripper, self.robots[1].gripper)
+            )
+
+            _g0h_dist = np.linalg.norm(_gripper0_to_cable)
+
+            # Grasping reward
+            if self.check_cable_grasp():
+                reward += 0.5
+            # Reaching reward
+            reward += 1.0 * (1 - np.tanh(10.0 * _g0h_dist))
 
         if self.reward_scale is not None:
             reward *= self.reward_scale / 3.0
@@ -517,6 +536,14 @@ class TwoArmMolex(TwoArmEnv):
             self._visualize_gripper_to_target(
                 gripper=gripper, target=cable, target_type="site"
             )
+
+    def check_cable_grasp(self):
+        (g0, g1) = (
+            (self.robots[0].gripper["right"], self.robots[0].gripper["left"])
+            if "bimanual" in self.env_configuration
+            else (self.robots[0].gripper, self.robots[1].gripper)
+        )
+        return self._check_grasp(g0, "molex_cable_cable_col")
 
     def _check_success(self):
         """
