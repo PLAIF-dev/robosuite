@@ -67,8 +67,8 @@
       <geom name="stand_front_col" type="box" size="0.08 0.02 0.25"  pos="0 -0.06 0.255" class="stand"/>
       <body name="stand_belly_cam_body" pos="0 -0.1 0.2">
         <geom name="stand_belly_cam_col" type="box" size="0.042 0.013 0.0125" rgba="0.45 0.65 0.45 0.0" class="stand"/>
-        <geom name="stand_belly_cam_vis" type="mesh" mesh="d435_solid" pos="0 -0.01 0" euler="1.57078 0 0" rgba="0.45 0.45 0.45 1" class="stand_vis"/>
-        <camera name="stand_belly_cam" pos="-0.012 -0.01 0" fovy="42" euler="-1.57078 0 0" resolution="1920 1080"/>
+        <geom name="stand_belly_cam_vis" type="mesh" mesh="d435_solid" pos="0 -0.01 0" euler="2.09439 0 0" rgba="0.45 0.45 0.45 1" class="stand_vis"/>
+        <camera name="stand_belly_cam" pos="-0.012 -0.01 0" fovy="42" euler="-1.0472 0 0" resolution="1920 1080"/>
       </body>
 
       <geom name="stand_augment_right_col" type="box" size="0.02 0.04 0.04" pos="0.06 0 0.045" class="stand"/>

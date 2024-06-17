@@ -440,6 +440,48 @@ def mat2euler(rmat, axes="sxyz"):
     return vec((ax, ay, az))
 
 
+def euler2quat(euler):
+    """Convert Euler Angles to Quaternions."""
+    euler = np.asarray(euler, dtype=np.float64)
+    assert euler.shape[-1] == 3, "Invalid shape euler {}".format(euler)
+
+    ai, aj, ak = euler[..., 2] / 2, -euler[..., 1] / 2, euler[..., 0] / 2
+    si, sj, sk = np.sin(ai), np.sin(aj), np.sin(ak)
+    ci, cj, ck = np.cos(ai), np.cos(aj), np.cos(ak)
+    cc, cs = ci * ck, ci * sk
+    sc, ss = si * ck, si * sk
+
+    quat = np.empty(euler.shape[:-1] + (4,), dtype=np.float64)
+    quat[..., 0] = cj * cc + sj * ss
+    quat[..., 3] = cj * sc - sj * cs
+    quat[..., 2] = -(cj * ss + sj * cc)
+    quat[..., 1] = cj * cs - sj * sc
+    return quat
+
+
+def quat2euler(quat):
+    """Convert Quaternions to Euler Angles.  See rotation.py for notes"""
+    quat = np.asarray(quat, dtype=np.float64)
+    assert quat.shape[-1] == 4, "Invalid shape quat {}".format(quat)
+
+    qw, qx, qy, qz = quat[..., 0], quat[..., 1], quat[..., 2], quat[..., 3]
+    ysqr = qy * qy
+
+    t0 = +2.0 * (qw * qx + qy * qz)
+    t1 = +1.0 - 2.0 * (qx * qx + ysqr)
+    X = np.arctan2(t0, t1)
+
+    t2 = +2.0 * (qw * qy - qz * qx)
+    t2 = np.clip(t2, -1.0, 1.0)
+    Y = np.arcsin(t2)
+
+    t3 = +2.0 * (qw * qz + qx * qy)
+    t4 = +1.0 - 2.0 * (ysqr + qz * qz)
+    Z = np.arctan2(t3, t4)
+
+    return np.stack((X, Y, Z), axis=-1)
+
+
 def pose2mat(pose):
     """
     Converts pose to homogeneous matrix.
@@ -698,7 +740,9 @@ def rotation_matrix(angle, direction, point=None):
     cosa = math.cos(angle)
     direction = unit_vector(direction[:3])
     # rotation matrix around unit vector
-    R = np.array(((cosa, 0.0, 0.0), (0.0, cosa, 0.0), (0.0, 0.0, cosa)), dtype=np.float32)
+    R = np.array(
+        ((cosa, 0.0, 0.0), (0.0, cosa, 0.0), (0.0, 0.0, cosa)), dtype=np.float32
+    )
     R += np.outer(direction, direction) * (1.0 - cosa)
     direction *= sina
     R += np.array(
@@ -870,7 +914,9 @@ def get_orientation_error(target_orn, current_orn):
         orn_error (np.array): (ax,ay,az) current orientation error, corresponds to
             (target_orn - current_orn)
     """
-    current_orn = np.array([current_orn[3], current_orn[0], current_orn[1], current_orn[2]])
+    current_orn = np.array(
+        [current_orn[3], current_orn[0], current_orn[1], current_orn[2]]
+    )
     target_orn = np.array([target_orn[3], target_orn[0], target_orn[1], target_orn[2]])
 
     pinv = np.zeros((3, 4))

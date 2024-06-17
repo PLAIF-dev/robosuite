@@ -13,7 +13,9 @@ class PlaifDualRB3(ManipulatorModel):
     """
 
     def __init__(self, idn=0):
-        super().__init__(xml_path_completion("robots/plaif_dual_rb3/robot.xml"), idn=idn)
+        super().__init__(
+            xml_path_completion("robots/plaif_dual_rb3/robot.xml"), idn=idn
+        )
 
     @property
     def default_mount(self):
@@ -54,7 +56,20 @@ class PlaifDualRB3(ManipulatorModel):
         # [right, left]
         # Arms half extended
         return np.array(
-            [-1.35, 0.25, 2.1, 2.2, 1.3, 0.0,  1.35, -0.25, -2.1, -2.2, -1.3, 0.0]
+            [
+                -1.68,
+                0.793,
+                2.07,
+                -1.41,
+                -2.34,
+                -1.19,
+                1.68,
+                -0.793,
+                -2.07,
+                1.41,
+                2.34,
+                -1.19,
+            ]
         )
 
     @property
@@ -62,7 +77,7 @@ class PlaifDualRB3(ManipulatorModel):
         return {
             "bins": (-0.5, -0.1, 0),
             "empty": (-0.29, 0, 0),
-            "table": lambda table_length: (-0.26 - table_length / 2, 0, 0),
+            "table": lambda table_length: (-table_length / 2, 0, 0),
         }
 
     @property

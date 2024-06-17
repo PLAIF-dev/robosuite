@@ -7,6 +7,7 @@ from .rethink_mount import RethinkMount
 MOUNT_MAPPING = {
     "RethinkMount": RethinkMount,
     "RethinkMinimalMount": RethinkMinimalMount,
+    "NullMount": NullMount,
     None: NullMount,
 }
 
