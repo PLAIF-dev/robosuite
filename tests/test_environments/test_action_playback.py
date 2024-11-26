@@ -7,7 +7,7 @@ import random
 import numpy as np
 
 import robosuite
-from robosuite.controllers import load_controller_config
+from robosuite.controllers import load_composite_controller_config
 
 
 def test_playback():
@@ -18,7 +18,7 @@ def test_playback():
     env = robosuite.make(
         "Lift",
         robots=["Panda"],
-        controller_configs=load_controller_config(default_controller="OSC_POSE"),
+        controller_configs=load_composite_controller_config(controller="BASIC"),
         has_renderer=False,
         has_offscreen_renderer=False,
         ignore_done=True,

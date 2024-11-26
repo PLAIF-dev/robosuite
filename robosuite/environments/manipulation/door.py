@@ -1,7 +1,7 @@
 import numpy as np
 from collections import OrderedDict
 
-from robosuite.environments.manipulation.single_arm_env import SingleArmEnv
+from robosuite.environments.manipulation.manipulation_env import ManipulationEnv
 from robosuite.models.arenas import TableArena
 from robosuite.models.objects import DoorObject
 from robosuite.models.tasks import ManipulationTask
@@ -9,7 +9,7 @@ from robosuite.utils.observables import Observable, sensor
 from robosuite.utils.placement_samplers import UniformRandomSampler
 
 
-class Door(SingleArmEnv):
+class Door(ManipulationEnv):
     """
     This class corresponds to the door opening task for a single robot arm.
 
@@ -84,6 +84,9 @@ class Door(SingleArmEnv):
         control_freq (float): how many control signals to receive in every second. This sets the amount of
             simulation time that passes between every action input.
 
+        lite_physics (bool): Whether to optimize for mujoco forward and step calls to reduce total simulation overhead.
+            Set to False to preserve backward compatibility with datasets collected in robosuite <= 1.4.1.
+
         horizon (int): Every episode lasts for exactly @horizon timesteps.
 
         ignore_done (bool): True if never terminating the environment (ignore @horizon).
@@ -148,6 +151,7 @@ class Door(SingleArmEnv):
         render_visual_mesh=True,
         render_gpu_device_id=-1,
         control_freq=20,
+        lite_physics=True,
         horizon=1000,
         ignore_done=False,
         hard_reset=True,
@@ -156,7 +160,7 @@ class Door(SingleArmEnv):
         camera_widths=256,
         camera_depths=False,
         camera_segmentations=None,  # {None, instance, class, element}
-        renderer="mujoco",
+        renderer="mjviewer",
         renderer_config=None,
     ):
         # settings for table top (hardcoded since it's not an essential part of the environment)
@@ -178,7 +182,7 @@ class Door(SingleArmEnv):
             robots=robots,
             env_configuration=env_configuration,
             controller_configs=controller_configs,
-            mount_types="default",
+            base_types="default",
             gripper_types=gripper_types,
             initialization_noise=initialization_noise,
             use_camera_obs=use_camera_obs,
@@ -189,6 +193,7 @@ class Door(SingleArmEnv):
             render_visual_mesh=render_visual_mesh,
             render_gpu_device_id=render_gpu_device_id,
             control_freq=control_freq,
+            lite_physics=lite_physics,
             horizon=horizon,
             ignore_done=ignore_done,
             hard_reset=hard_reset,
@@ -337,8 +342,6 @@ class Door(SingleArmEnv):
 
         # low-level object information
         if self.use_object_obs:
-            # Get robot prefix and define observables modality
-            pf = self.robots[0].robot_model.naming_prefix
             modality = "object"
 
             # Define sensor callbacks
@@ -351,26 +354,23 @@ class Door(SingleArmEnv):
                 return self._handle_xpos
 
             @sensor(modality=modality)
-            def door_to_eef_pos(obs_cache):
-                return (
-                    obs_cache["door_pos"] - obs_cache[f"{pf}eef_pos"]
-                    if "door_pos" in obs_cache and f"{pf}eef_pos" in obs_cache
-                    else np.zeros(3)
-                )
-
-            @sensor(modality=modality)
-            def handle_to_eef_pos(obs_cache):
-                return (
-                    obs_cache["handle_pos"] - obs_cache[f"{pf}eef_pos"]
-                    if "handle_pos" in obs_cache and f"{pf}eef_pos" in obs_cache
-                    else np.zeros(3)
-                )
-
-            @sensor(modality=modality)
             def hinge_qpos(obs_cache):
                 return np.array([self.sim.data.qpos[self.hinge_qpos_addr]])
 
-            sensors = [door_pos, handle_pos, door_to_eef_pos, handle_to_eef_pos, hinge_qpos]
+            arm_prefixes = self._get_arm_prefixes(self.robots[0], include_robot_name=False)
+            full_prefixes = self._get_arm_prefixes(self.robots[0])
+            sensors = [door_pos, handle_pos, hinge_qpos]
+
+            # create variable number of sensors for each arm representing distance from specified arm to handle/door
+            sensors += [
+                self._get_obj_eef_sensor(full_pf, "door_pos", f"door_to_{arm_pf}eef_pos", modality)
+                for arm_pf, full_pf in zip(arm_prefixes, full_prefixes)
+            ]
+            sensors += [
+                self._get_obj_eef_sensor(full_pf, "handle_pos", f"handle_to_{arm_pf}eef_pos", modality)
+                for arm_pf, full_pf in zip(arm_prefixes, full_prefixes)
+            ]
+
             names = [s.__name__ for s in sensors]
 
             # Also append handle qpos if we're using a locked door version with rotatable handle
@@ -453,8 +453,13 @@ class Door(SingleArmEnv):
     def _gripper_to_handle(self):
         """
         Calculates distance from the gripper to the door handle.
+        If multiple arms, returns the minimum distance.
 
         Returns:
             np.array: (x,y,z) distance between handle and eef
         """
-        return self._handle_xpos - self._eef_xpos
+        dists = []
+        for arm in self.robots[0].arms:
+            diff = self._handle_xpos - np.array(self.sim.data.site_xpos[self.robots[0].eef_site_id[arm]])
+            dists.append(np.linalg.norm(diff))
+        return min(dists)

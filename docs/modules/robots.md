@@ -2,11 +2,11 @@
 
 ![robot_overview_diagram](../images/robot_module.png)
 
-**Robots** are a key component in **robosuite**, and serve as the embodiment of a given agent as well as the central interaction point within an environment and key interface to MuJoCo for the robot-related state and control. **robosuite** captures this level of abstraction with the [Robot](../simulation/robot)-based classes, with support for both single-armed and bimanual variations. In turn, the Robot class is centrally defined by a [RobotModel](../modeling/robot_model), [MountModel](../modeling/robot_model.html#mount-model), and [Controller(s)](../simulation/controller). Subclasses of the `RobotModel` class may also include additional models as well; for example, the [ManipulatorModel](../modeling/robot_model.html#manipulator-model) class also includes [GripperModel(s)](../modeling/robot_model.html#gripper-model) (with no gripper being represented by a dummy class).
+**Robots** are a key component in **robosuite**, and serve as the embodiment of a given agent as well as the central interaction point within an environment and key interface to MuJoCo for the robot-related state and control. **robosuite** captures this level of abstraction with the [Robot](../simulation/robot)-based classes, with support for both fixed-base and mobile-base (which includes legged and wheeled robots) variations. In turn, the Robot class is centrally defined by a [RobotModel](../modeling/robot_model), [RobotBaseModel](../modeling/robot_model.html#base-model), and [Controller(s)](../simulation/controller). Subclasses of the `RobotModel` class may also include additional models as well; for example, the [ManipulatorModel](../modeling/robot_model.html#manipulator-model) class also includes [GripperModel(s)](../modeling/robot_model.html#gripper-model) (with no gripper being represented by a dummy class).
 
 The high-level features of **robosuite**'s robots are described as follows:
 
-* **Diverse and Realistic Models**: **robosuite** provides models for 8 commercially-available manipulator robots (including the bimanual Baxter robot), 7 grippers (including the popular Robotiq 140 / 85 models), and 6 controllers, with model properties either taken directly from the company website or raw spec sheets.
+* **Diverse and Realistic Models**: **robosuite** provides models for 20 commercially-available robots (including the humanoid GR1 Robot), 15 grippers (including the inspire dexterous hand model), and 6 controllers, with model properties either taken directly from the company website or raw spec sheets.
 
 * **Modularized Support**: Robots are designed to be plug-n-play -- any combinations of robots, models, and controllers can be used, assuming the given environment is intended for the desired robot configuration. Because each robot is assigned a unique ID number, multiple instances of identical robots can be instantiated within the simulation without error.
 
@@ -59,3 +59,12 @@ At any given time, each robot has a set of `properties` whose real-time values c
 #### Baxter
 ![baxter_robot](../images/models/robot_model_Baxter.png)
 [Baxter](http://collabrobots.com/about-baxter-robot/) is an older but classic bimanual robot originally produced by Rethink Robotics but now owned by CoThink Robotics, and is equipped with two 7-DoF arms as well as an addition joint for controlling its swiveling display screen (inactive and disabled by default in **robosuite**). Each arm can be controlled independently in, and is the single multi-armed model currently supported in **robosuite**. Each arm is equipped with a `RethinkGripper` by default.
+
+## Robot Bases
+
+We provide a set of robot bases that can be added to the `RobotModel` via the `add_base(base: RobotBaseModel)` method. These bases can be static (e.g. `MountModel`) or movable (e.g. `MobileBaseModel` or `LegBaseModel`). This enables composability of robots with different bases, such as a mobile manipulator robot or a quadruped robot. Examples are shown in the [compositional.py](robosuite/models/robots/compositional.py).
+
+
+## Robosuite Models
+
+Other than the core robot models, we also provide more models for the `robosuite` ecosystem. Checkout this [robosuite_models](https://github.com/ARISE-Initiative/robosuite_models) repository for more details. This can also be installed via `pip install robosuite-models`.

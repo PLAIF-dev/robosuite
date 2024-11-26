@@ -2,8 +2,14 @@
 
 We provide a collection of [demo scripts](https://github.com/ARISE-Initiative/robosuite/tree/master/robosuite/demos) to showcase the functionalities in **robosuite**.
 
+<div class="admonition warning">
+<p class="admonition-title">Attention Mac users!</p>
+
+For these scripts, Mac users who wish to use the default mjviewer renderer need to prepend the "python" command with "mj": `mjpython ...`
+</div>
+
 ### Environment Configuration
-The `demo_random_action.py` sciprt is the starter demo script that you should try first. It highlights the modular design of our simulated environments. It enables users to create new simulation instances by choosing one [environment](modules/environments), one or more [robots](modules/robots), and their [controllers](modules/controllers) from the command line. The script creates an environment instance and controls the robots with uniform random actions drawn from the controller-specific action space. The list of all environments, robots, controllers, and gripper types supported in the current version of **robosuite** are defined by `suite.ALL_ENVIRONMENTS`, `suite.ALL_ROBOTS`, `suite.ALL_CONTROLLERS`, and `suite.ALL_GRIPPERS` respectively.
+The `demo_random_action.py` script is the starter demo script that you should try first. It highlights the modular design of our simulated environments. It enables users to create new simulation instances by choosing one [environment](modules/environments), one or more [robots](modules/robots), and their [controllers](modules/controllers) from the command line. The script creates an environment instance and controls the robots with uniform random actions drawn from the controller-specific action space. The list of all environments, robots, controllers, and gripper types supported in the current version of **robosuite** are defined by `suite.ALL_ENVIRONMENTS`, `suite.ALL_ROBOTS`, `suite. ALL_PART_CONTROLLERS`, and `suite.ALL_GRIPPERS` respectively.
 
 
 ### Controller Test
@@ -93,9 +99,7 @@ The `demo_device_control.py` scripts shows how to teleoperate robot with [contro
 
 * **Keyboard**
     We use the keyboard to control the end-effector of the robot.
-    The keyboard provides 6-DoF control commands through various keys.
-    The commands are mapped to joint velocities through an inverse kinematics
-    solver from Bullet physics.
+    The keyboard provides 6-DoF control commands through various keyboard keys.
 
     **Note:**
         To run this script with macOS, you must run it with root access.
@@ -117,8 +121,14 @@ The `demo_device_control.py` scripts shows how to teleoperate robot with [contro
         This current implementation only supports macOS (Linux support can be added).
         Download and install the [driver](https://www.3dconnexion.com/service/drivers.html) before running the script.
 
+* **Mujoco GUI**
+        The Mujoco GUI provides a graphical user interface for viewing and interacting with a mujoco simulation. We use the GUI and a mouse to drag and drop mocap bodies, whose
+        poses are tracked by a controller. More specifically, once the mujoco GUI is loaded from running `python demo_device_control.py`, you first need to hit the <Tab> key to reach the interactive mujoco viewer state. Then, you should double click on
+        a mocap body. Finally, to drag the mocap body, you can hit to <Ctrl> or <Shift> key to translate or rotate the mocap body. For Mac users, you need to use `mjpython demo_device_control.py`. See the note from [mujoco](https://mujoco.readthedocs.io/en/stable/python.html#passive-viewer) for more details.
+
+
 Additionally, `--pos_sensitivity` and `--rot_sensitivity` provide relative gains for increasing / decreasing the user input
-device sensitivity. The `--controller` argument determines the choice of using either inverse kinematics controller (`ik`) or operational space controller (`osc`). The main difference is that user inputs with `ik`'s rotations are always taken relative to eef coordinate frame, whereas user inputs with `osc`'s rotations are taken relative to global frame (i.e., static / camera frame of reference). `osc` also tends to be more computationally efficient since `ik` relies on the backend [pybullet](https://github.com/StanfordVL/bullet3) IK solver.
+device sensitivity.
 
 
 Furthermore, please choose environment specifics with the following arguments:
@@ -132,17 +142,14 @@ Furthermore, please choose environment specifics with the following arguments:
         only accept a single single-armed robot name
 
 * `--config`: Exclusively applicable and only should be specified for `TwoArm...` environments. Specifies the robot
-        configuration desired for the task. Options are {`bimanual`, `single-arm-parallel`, and `single-arm-opposed`}
+        configuration desired for the task when two robots are inputted. Options are {`parallel` and `opposed`}
 
-    * `bimanual`: Sets up the environment for a single bimanual robot. Expects a single bimanual robot name to
-                be specified in the `--robots` argument
-
-    * `single-arm-parallel`: Sets up the environment such that two single-armed robots are stationed next to
-                each other facing the same direction. Expects a 2-tuple of single-armed robot names to be specified
+    * `parallel`: Sets up the environment such that two robots are stationed next to
+                each other facing the same direction. Expects a 2-tuple of robot names to be specified
                 in the `--robots` argument.
 
-    * `single-arm-opposed`: Sets up the environment such that two single-armed robots are stationed opposed from
-                each other, facing each other from opposite directions. Expects a 2-tuple of single-armed robot names
+    * `opposed`: Sets up the environment such that two robots are stationed opposed from
+                each other, facing each other from opposite directions. Expects a 2-tuple of robot names
                 to be specified in the `--robots` argument.
 
 * `--arm`: Exclusively applicable and only should be specified for `TwoArm...` environments. Specifies which of the
@@ -157,18 +164,16 @@ Furthermore, please choose environment specifics with the following arguments:
 Examples:
 * For normal single-arm environment:
 ```
-$ python demo_device_control.py --environment PickPlaceCan --robots Sawyer --controller osc
+$ python demo_device_control.py --environment PickPlaceCan --robots Sawyer
 ```
 * For two-arm bimanual environment:
 ```
-$ python demo_device_control.py --environment TwoArmLift --robots Baxter --config bimanual --arm left --controller osc
+$ python demo_device_control.py --environment TwoArmLift --robots Baxter --config bimanual --arm left
 ```
 * For two-arm multi single-arm robot environment:
 ```
-$ python demo_device_control.py --environment TwoArmLift --robots Sawyer Sawyer --config single-arm-parallel --controller osc
+$ python demo_device_control.py --environment TwoArmLift --robots Sawyer Sawyer --config parallel
 ```
-In **robosuite**, we use this teleoperation script extensively for debugging environment designs, tuning reward functions, and collecting human demonstration data.
-
 
 ### Video Recording
 The `demo_video_recording.py` script shows how to record a video of robot roll-out with the `imageio` library. This script uses offscreen rendering. This is useful for generating qualitative videos of robot policy behaviors. The generated video is in the mp4 format. Example:
@@ -177,16 +182,55 @@ $ python demo_video_recording.py --environment Lift --robots Panda
 ```
 
 ### Rendering Options
-The `demo_renderers.py` script shows how to use different renderers with the simulation environments. Our current version supports two rendering options: MuJoCo (default), and NVISII. More information about these renderers can be found in the [Renderer](modules/renderers) module. Example:
+The `demo_renderers.py` script shows how to use different renderers with the simulation environments. Our current version supports the default MuJoCo renderer. More information about these renderers can be found in the [Renderer](modules/renderers) module. Example:
 ```sh
-$ python demo_renderers.py --renderer nvisii
+$ python demo_renderers.py --renderer default
 ```
-The `--renderer` flag can be set to `mujoco` (default), and `nvisii`.
+The `--renderer` flag can be set to `mujoco` or `default(default)
 
-### Vision Modalities
-The `demo_nvisii_modalities.py` scripts illustrate how to obtain vision modalities from the NVISII renderer respectively. This script uses the flags specified and renders that particular vision modality. Example:
+### Exporting to USD
+Exporting to USD allows users to render **robosuite** trajectories in external renderers such as NVIDIA Omniverse and Blender. In order to export to USD you must install the required dependencies for the exporter.
 ```sh
-$ python demo_nvisii_modalities.py --vision-modality depth
+$ pip install usd-core pillow tqdm
 ```
-The `--vision-modality` flag can be set to `depth`, `normal`, `segmentation` or `rgb` (default).
-The `-segmentation-level` flag can be set only when `--vision-modality` is set to `segmentation`. It can set to `instance`, `class`, or `element`.
+Once the dependencies are installed, the USD exporter can be imported via `from robosuite.utils.usd import exporter`. The `USDExporter` class in the `exporter` module handles exporting all nessecary assets and USD files associated with a **robosuite** trajectory. 
+
+First, instantiate a **robosuite** environment. Each environment has an MjModel and MjData instance associated with it. These attributes can be retrieved using
+```python
+model = env.sim.model._model
+data = env.sim.data._data
+```
+Both `model` and `data` are used by the USD exporter. Once a robosuite environment is defined, create a `USDExporter` object with the following arguments.
+
+* `model` (required): an MjModel instance.
+* `max_geom`: Optional integer specifying the maximum number of geoms that
+can be rendered in the same scene. If None this will be chosen
+automatically based on the estimated maximum number of renderable
+geoms in the model.
+* `output_directory_name`: name of root directory to store outputted frames
+and assets generated by the USD renderer.
+and assets by the USD renderer.
+* `light_intensity`: default intensity of the lights in the external renderer.
+* `shareable`: use relative paths to assets instead of absolute paths to allow
+files to be shared across users.
+* `online`: set to true if using USD exporter for online rendering. This value
+is set to true when rendering with Isaac Sim. If online is set to true, shareable must be false.
+* `framerate`: framerate of the exported scene when rendered
+* `camera_names`: list of fixed cameras defined in the mujoco model to render.
+* `stage`: predefined stage to add objects in the scene to.
+* `verbose`: decides whether to print updates.
+
+`USDExporter` is adapted from [MuJoCo](https://github.com/google-deepmind/mujoco). In order to add a new frame in the outputted USD trajectory, call `update_scene` in the `exporter` module. 
+
+```python
+exp = exporter.USDExporter(model=model, output_directory_name="usd_demo")
+exp.update_scene(data)
+```
+
+This updates all geoms in the scene with their current poses from simulation. To save a USD trajectory, use the `save_scene` method.
+
+```python
+exp.save_scene(filetype="usd")
+```
+
+Users are able to save scenes as .usd, .usda, or .usdc files. For a more comprehensive example of the USD renderer, please refer to the [`demo_usd_export.py`]() script. This demonstration allows users to teleoperate a robot with a device (i.e. keyboard or spacemouse) and save the collected trajectory as a USD file. 

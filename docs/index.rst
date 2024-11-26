@@ -12,7 +12,7 @@ Welcome to robosuite's documentation!
 
    overview
    installation
-   quickstart
+   basicusage
    demos
 
 .. toctree::
@@ -21,7 +21,7 @@ Welcome to robosuite's documentation!
 
    modules/overview
    modules/robots
-   modules/controllers.ipynb
+   modules/controllers
    modules/objects
    modules/environments
    modules/sensors
@@ -30,6 +30,13 @@ Welcome to robosuite's documentation!
 
 .. toctree::
    :maxdepth: 1
+   :caption: Tutorials
+
+   tutorials/add_controller
+   tutorials/add_environment
+
+.. toctree::
+   :maxdepth: 3
    :caption: Simulation API
 
    simulation/robot
@@ -60,13 +67,13 @@ Welcome to robosuite's documentation!
    algorithms/benchmarking
    algorithms/demonstrations
    algorithms/sim2real
-   algorithms/roboturk
 
 .. toctree::
    :maxdepth: 1
    :caption: Miscellaneous
 
    references
+   changelog
    acknowledgement
 
 Indices and tables
